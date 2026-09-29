@@ -1,0 +1,7 @@
+# Source masters — the site plays the extracted frames, not these
+*.mp4
+1.jpg
+
+# Local tooling, not part of the deployed site
+start.command
+.claude/
