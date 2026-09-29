@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Foz Atlântica — Oceanfront Residences, Foz do Douro, Porto</title>
+<meta name="description" content="Twenty-eight oceanfront residences in Foz do Douro, Porto. One to four bedrooms, west-facing over the Atlantic. Completion scheduled Q4 2027.">
+<meta property="og:title" content="Foz Atlântica — Oceanfront Residences, Porto">
+<meta property="og:description" content="Twenty-eight oceanfront residences in Foz do Douro, Porto. One to four bedrooms, west-facing over the Atlantic.">
+<meta property="og:image" content="assets/og.jpg">
+<meta name="theme-color" content="#16130F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/site.css">
+<link rel="preload" as="image" href="assets/frames/c1/0001.jpg">
+</head>
+<body>
+
+<!-- ══ FILM STAGE ══ -->
+<div class="stage">
+  <canvas id="film"></canvas>
+  <div class="stage-scrim" id="scrim"></div>
+  <div class="stage-side" id="side"></div>
+  <div class="stage-vignette"></div>
+</div>
+
+<!-- ══ TOP BAR ══ -->
+<header class="topbar" id="topbar">
+  <a class="wordmark" href="#top">
+    <span class="wordmark-main">Foz Atlântica</span>
+    <span class="wordmark-sub">Foz do Douro · Porto</span>
+  </a>
+  <div class="topbar-right">
+    <span class="chapter-readout"><em id="chapNum">00</em>&thinsp;/&thinsp;07 <i id="chapName">The Arrival</i></span>
+    <a class="btn-ghost" href="#enquire">Register Interest</a>
+  </div>
+  <div class="scrollbar-line"><i id="scrollLine"></i></div>
+</header>
+
+<!-- ══ CHAPTER RAIL ══ -->
+<nav class="rail" id="rail" aria-label="Chapters"></nav>
+
+<!-- ══ FIXED OVERLAY LAYER (chapters 1–6) ══ -->
+<div class="overlay" id="overlay">
+
+  <!-- HERO -->
+  <section class="scene scene-hero" id="s-hero">
+    <div class="hero-inner">
+      <p class="eyebrow reveal">Foz do Douro · Porto · Portugal</p>
+      <h1 class="display reveal">Foz Atlântica</h1>
+      <p class="lede reveal">Twenty-eight oceanfront residences in Foz do Douro, Porto's established
+        coastal district. One to four bedrooms, each facing west over the Atlantic. Fifteen minutes
+        from the city centre, thirty from Francisco Sá Carneiro airport.</p>
+      <div class="hero-actions reveal">
+        <button class="btn-play" id="startBtn" data-ch="1" disabled>
+          <span class="btn-play-label">Preparing the tour</span>
+          <span class="btn-play-meter"><i id="loadMeter"></i></span>
+        </button>
+        <a class="btn-quiet" href="#enquire">Pricing and availability</a>
+      </div>
+      <!-- INVENTED — placeholder figures, replace with the real release data -->
+      <div class="hero-facts reveal">
+        <span><em>From</em> €685,000</span><span><em>Completion</em> Q4 2027</span><span><em>Residences</em> 28</span>
+      </div>
+    </div>
+    <div class="scroll-hint"><span>or scroll</span><i></i></div>
+  </section>
+
+  <!-- GATES + CAPTIONS -->
+  <section class="scene scene-cap" data-ch="1" data-role="cap0">
+    <div class="cap cap-left">
+      <p class="eyebrow">01 — The Arrival</p>
+      <h2 class="display-s">The roof terrace</h2>
+      <p>A residents' roof deck with a heated infinity pool, a sun terrace and two spa baths,
+        set forty metres back from the shoreline.</p>
+    </div>
+  </section>
+  <section class="scene scene-cap" data-ch="1" data-role="cap1">
+    <div class="cap cap-right">
+      <h2 class="display-s">West-facing throughout</h2>
+      <p>All twenty-eight residences face west. There are no north-facing units and no
+        internal courtyards.</p>
+    </div>
+  </section>
+
+  <section class="scene scene-gate" data-ch="2">
+    <div class="gate">
+      <p class="eyebrow">02 — The Living Floor</p>
+      <h2 class="display-m">Nine metres of glass</h2>
+      <p class="gate-copy">Open-plan living and dining with 9.2 metres of west-facing glazing,
+        wide-board oak flooring and a stone fireplace. Sliding doors open the full width
+        onto the terrace.</p>
+      <button class="btn-play" data-ch="2"><span class="btn-play-label">Step inside</span><span class="btn-play-meter"><i></i></span></button>
+    </div>
+  </section>
+  <section class="scene scene-cap" data-ch="2" data-role="cap0">
+    <div class="cap cap-left">
+      <h2 class="display-s">Afternoon and evening light</h2>
+      <p>West-facing glazing brings direct sun into the living space from midday until sunset.</p>
+    </div>
+  </section>
+
+  <section class="scene scene-gate" data-ch="3">
+    <div class="gate">
+      <p class="eyebrow">03 — The Kitchen</p>
+      <h2 class="display-m">Oak cabinetry, marble islands</h2>
+      <p class="gate-copy">Natural oak cabinetry, a honed marble island with integrated wine
+        storage, and fully integrated appliances throughout.</p>
+      <button class="btn-play" data-ch="3"><span class="btn-play-label">See the kitchen</span><span class="btn-play-meter"><i></i></span></button>
+    </div>
+  </section>
+  <section class="scene scene-cap" data-ch="3" data-role="cap0">
+    <div class="cap cap-right">
+      <h2 class="display-s">A separate sleeping wing</h2>
+      <p>Bedrooms are grouped behind a single door, away from the living and entertaining space.</p>
+    </div>
+  </section>
+
+  <section class="scene scene-gate" data-ch="4">
+    <div class="gate">
+      <p class="eyebrow">04 — The Master Suite</p>
+      <h2 class="display-m">The principal suite</h2>
+      <p class="gate-copy">The principal bedroom opens onto a private terrace, with a walk-in
+        dressing room and an en-suite bathroom facing open water.</p>
+      <button class="btn-play" data-ch="4"><span class="btn-play-label">Enter the suite</span><span class="btn-play-meter"><i></i></span></button>
+    </div>
+  </section>
+  <section class="scene scene-cap" data-ch="4" data-role="cap0">
+    <div class="cap cap-left">
+      <h2 class="display-s">Terraces from 12 to 140 m²</h2>
+      <p>Sliding walls retract fully into the structure, so the terrace works as an extension
+        of the living space.</p>
+    </div>
+  </section>
+
+  <section class="scene scene-gate" data-ch="5">
+    <div class="gate">
+      <p class="eyebrow">05 — The Spa Bathroom</p>
+      <h2 class="display-m">The principal bathroom</h2>
+      <p class="gate-copy">Full-height Estremoz marble, a freestanding stone bath set into the
+        window line, and a walk-in rain shower behind low-iron glass.</p>
+      <button class="btn-play" data-ch="5"><span class="btn-play-label">See the bathroom</span><span class="btn-play-meter"><i></i></span></button>
+    </div>
+  </section>
+  <section class="scene scene-cap" data-ch="5" data-role="cap0">
+    <div class="cap cap-right">
+      <h2 class="display-s">Building services</h2>
+      <p>Hydronic underfloor heating and mechanical ventilation with heat recovery throughout.
+        Targeting an A2 energy certificate.</p>
+    </div>
+  </section>
+
+  <section class="scene scene-gate" data-ch="6">
+    <div class="gate">
+      <p class="eyebrow">06 — Wellness &amp; Amenities</p>
+      <h2 class="display-m">Residents' amenities</h2>
+      <p class="gate-copy">A residents' gym facing the sea, daytime concierge, secure underground
+        parking with one bay per residence, climate-controlled storage and private beach access.</p>
+      <button class="btn-play" data-ch="6"><span class="btn-play-label">See the amenities</span><span class="btn-play-meter"><i></i></span></button>
+    </div>
+  </section>
+  <section class="scene scene-cap" data-ch="6" data-role="cap0">
+    <div class="cap cap-left">
+      <h2 class="display-s">The gym</h2>
+      <p>Cardio and resistance equipment, a stretch studio, and a treatment room bookable
+        through the concierge.</p>
+    </div>
+  </section>
+
+</div><!-- /overlay -->
+
+<!-- ══ SCROLL TRACK (spacers drive the film) ══ -->
+<div class="track" id="track" aria-hidden="true">
+  <div class="spacer" id="heroSpace"></div>
+  <div class="spacer" data-ch="1"></div>
+  <div class="spacer" data-ch="2"></div>
+  <div class="spacer" data-ch="3"></div>
+  <div class="spacer" data-ch="4"></div>
+  <div class="spacer" data-ch="5"></div>
+  <div class="spacer" data-ch="6"></div>
+</div>
+
+<!-- ══ FINALE — video 7, looping ══ -->
+<main class="finale" id="finale">
+
+  <section class="fin-gate" id="finGate">
+    <div class="gate">
+      <p class="eyebrow">07 — The Investment</p>
+      <h2 class="display-m">Pricing and availability</h2>
+      <p class="gate-copy">Unit mix, specification, payment schedule and the planning context
+        for this part of the Porto coastline.</p>
+      <button class="btn-play" data-ch="7"><span class="btn-play-label">See the details</span><span class="btn-play-meter"><i></i></span></button>
+    </div>
+  </section>
+
+  <div class="fin-body">
+
+    <section class="panel" id="numbers">
+      <p class="eyebrow center">Key figures</p>
+      <h2 class="display-m center">Pricing and programme</h2>
+      <!-- INVENTED — every figure in this block is placeholder data -->
+      <div class="stats">
+        <div class="stat"><em>€685,000</em><span>Entry price, one-bedroom</span></div>
+        <div class="stat"><em>28</em><span>Residences in the release</span></div>
+        <div class="stat"><em>1–4</em><span>Bedrooms per residence</span></div>
+        <div class="stat"><em>Q4 2027</em><span>Scheduled completion</span></div>
+      </div>
+      <p class="note center">Prices are indicative and subject to availability at the time of
+        reservation. Areas are approximate and measured to the current design. Please read the
+        notes at the foot of this page.</p>
+    </section>
+
+    <section class="panel" id="why">
+      <p class="eyebrow center">Location and context</p>
+      <div class="cards">
+        <article class="card">
+          <span class="card-num">01</span>
+          <h3>Constrained supply</h3>
+          <p>Foz do Douro is bounded by protected shoreline and an established low-rise fabric.
+            New oceanfront consents in the district are granted rarely and in small numbers,
+            which limits the volume of comparable stock that can reach the market.</p>
+        </article>
+        <article class="card">
+          <span class="card-num">02</span>
+          <h3>Year-round demand</h3>
+          <p>Porto is not a seasonal market. Business travel, a large international student
+            population and a substantial remote-working base support occupancy outside the
+            summer months.</p>
+        </article>
+        <article class="card">
+          <span class="card-num">03</span>
+          <h3>Relative pricing</h3>
+          <p>Prime Porto continues to trade at a lower price per square metre than prime Lisbon,
+            and below comparable Atlantic frontage in Spain and south-west France.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" id="residences">
+      <p class="eyebrow center">The release</p>
+      <h2 class="display-m center">Twenty-eight residences</h2>
+      <!-- INVENTED — the entire unit mix, availability and price list is placeholder data -->
+      <div class="table-wrap">
+        <table class="units">
+          <thead>
+            <tr><th>Type</th><th>Layout</th><th>Interior</th><th>Terrace</th><th>Available</th><th>From</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>T1</td><td>1 bed · 1 bath</td><td>68–74 m²</td><td>12–16 m²</td><td>6 of 8</td><td>€685,000</td></tr>
+            <tr><td>T2</td><td>2 bed · 2 bath</td><td>96–112 m²</td><td>18–24 m²</td><td>9 of 12</td><td>€945,000</td></tr>
+            <tr><td>T3</td><td>3 bed · 3 bath</td><td>138–156 m²</td><td>28–36 m²</td><td>4 of 6</td><td>€1,340,000</td></tr>
+            <tr class="row-hero"><td>Penthouse</td><td>4 bed · 4 bath</td><td>212–248 m²</td><td>96–140 m²</td><td>2 of 2</td><td>€2,480,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="terms">
+        <div><em>Payment</em><span>10% on reservation · 20% on contract · 70% on completion</span></div>
+        <div><em>Tenure</em><span>Freehold. Open to non-resident and corporate buyers.</span></div>
+        <div><em>Included</em><span>Fitted kitchen, wardrobes, climate control and one parking bay per residence.</span></div>
+        <div><em>Management</em><span>Optional rental-management programme, with a furnishing package available.</span></div>
+      </div>
+    </section>
+
+    <section class="panel panel-cta" id="enquire">
+      <div class="cta-grid">
+        <div class="cta-copy">
+          <p class="eyebrow">Register interest</p>
+          <h2 class="display-m">Request the brochure</h2>
+          <p>Floor plans, the full price list, the specification schedule, estimated running costs
+            and the rental-management terms, sent as a single PDF — usually within one working day.</p>
+          <ul class="tick">
+            <li>Complete availability and pricing by unit</li>
+            <li>Floor plans and specification schedule</li>
+            <li>Construction programme and payment schedule</li>
+            <li>Private viewing, in Porto or by video</li>
+          </ul>
+        </div>
+        <form class="cta-form" id="enquiryForm" novalidate>
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="f-phone">Phone <i>(optional)</i></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+          <div class="field"><label for="f-intent">I would like to</label>
+            <select id="f-intent" name="intent">
+              <option>Receive the brochure</option>
+              <option>Schedule a viewing</option>
+              <option>Both</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-budget">Budget</label>
+            <select id="f-budget" name="budget">
+              <option value="">Select a range</option>
+              <option>€650,000 – €950,000</option>
+              <option>€950,000 – €1,400,000</option>
+              <option>€1,400,000 – €2,500,000</option>
+              <option>€2,500,000 +</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-msg">Anything we should know <i>(optional)</i></label><textarea id="f-msg" name="message" rows="3"></textarea></div>
+          <button class="btn-solid" type="submit">Request brochure</button>
+          <p class="form-note" id="formNote">We respond to every enquiry directly.</p>
+        </form>
+      </div>
+    </section>
+
+    <!--
+      ═══════════════════════════════════════════════════════════════
+      PLACEHOLDER — supply before this site is shown to anyone
+      ═══════════════════════════════════════════════════════════════
+      · Phone number and contact email (footer + form confirmation)
+      · Estate-agency licence number (AMI) and tourism registration (RNT)
+      · Confirmed street address, developer name, architect name
+      · Real prices, unit mix, availability and completion date
+        (search this file for "INVENTED" — three blocks)
+      · Verify the specification claims: 9.2 m of glazing, Estremoz marble,
+        A2 energy target, 12–140 m² terrace range, one parking bay per unit
+      · Verify the distances: 15 min to the city centre, 30 min to the airport
+      · FORM_ENDPOINT in js/site.js is still null — the form delivers nowhere
+      ═══════════════════════════════════════════════════════════════
+    -->
+
+    <footer class="site-foot">
+      <div class="foot-top">
+        <div class="foot-brand">
+          <span class="wordmark-main">Foz Atlântica</span>
+          <span class="wordmark-sub">Avenida do Brasil, Foz do Douro, 4150&#8209;003 Porto</span>
+        </div>
+        <div class="foot-contact">
+          <a href="tel:+351000000000">+351 000 000 000</a>
+          <a href="mailto:info@fozatlantica.pt">info@fozatlantica.pt</a>
+          <span>Licence AMI 00000</span>
+        </div>
+        <div class="foot-links">
+          <a href="#numbers">Figures</a><a href="#why">Location</a><a href="#residences">Residences</a><a href="#enquire">Contact</a>
+          <a href="https://www.livroreclamacoes.pt/inicio" target="_blank" rel="noopener noreferrer">Complaints Book</a>
+        </div>
+      </div>
+      <p class="disclaimer">
+        Illustrative marketing material. All imagery is computer-generated and indicative of design
+        intent; finishes, layouts, landscaping and views are subject to change. Prices, areas,
+        availability and the completion date are indicative, are not a forecast or a guarantee, and
+        do not constitute an offer, a contract or investment advice. Property values and rental
+        income can fall as well as rise. Portuguese residential property acquisitions are not an
+        eligible route under Portugal's residence-by-investment programme. Prospective purchasers
+        should take independent legal, tax and financial advice before committing.
+      </p>
+      <p class="colophon">© 2026 Foz Atlântica</p>
+    </footer>
+
+    <!-- ══ DEMONSTRATION NOTICE ══ -->
+    <aside class="demo-notice" role="note" aria-label="Demonstration notice">
+      <div class="demo-notice-inner">
+        <span class="demo-badge">Demonstration site</span>
+        <p><strong>Foz Atlântica is not a real development.</strong> This page was built to
+          demonstrate a scroll-driven presentation format. The project, the company, the
+          address, the licence number and every price, area, availability figure and date
+          shown here are invented. All imagery is computer-generated. Nothing on this page
+          is an offer or an invitation to invest, and the enquiry form does not deliver to
+          anyone.</p>
+      </div>
+    </aside>
+
+  </div><!-- /fin-body -->
+</main>
+
+<script src="js/site.js"></script>
+</body>
+</html>
