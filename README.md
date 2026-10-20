@@ -48,11 +48,29 @@ as masters; they are not loaded by the site.
 
 ## Running it
 
-**Double-click `start.command`.** It starts a local server in this folder, picks
-a free port and opens your browser. Leave the Terminal window it opens running
-while you view the site; closing it stops the server.
+### In VS Code (easiest)
 
-Or by hand, from this folder:
+Open this folder in VS Code and press **Cmd+Shift+B**. That runs the default
+task: it starts the local server and opens the site in your browser.
+
+Every other action is a task too — **Terminal → Run Task…** from the menu:
+
+| Task | What it does |
+|---|---|
+| ▶︎ Start the site | Serves on localhost:8123 and opens the browser (Cmd+Shift+B) |
+| ■ Stop the site | Shuts the server down |
+| ↻ Open the site in the browser | Reopens the tab if you closed it |
+| 📱 Show the address for my phone | Prints the Wi-Fi address — it changes between networks |
+| 🚀 Publish to the web | Deploys to Vercel for a permanent public address |
+| ⬆︎ Save my changes to GitHub | Commits and pushes, asking you for a message |
+
+VS Code will also offer to install the **Live Server** extension. With it you get
+a **Go Live** button in the status bar that does the same thing on the same port,
+and reloads the page automatically whenever you save a file.
+
+### Without VS Code
+
+Double-click `start.command`, or run from this folder:
 
 ```bash
 python3 -m http.server 8123
@@ -63,6 +81,11 @@ Then open http://localhost:8123.
 The site needs a server because it loads 943 image files by relative path.
 Double-clicking `index.html` itself is not reliable — browsers restrict what a
 page opened from `file://` may load, and it varies by browser.
+
+**The local server stops when you close its panel, quit VS Code or restart the
+machine.** That is normal, and it is why the address goes dead — just start it
+again. To get an address that does not depend on your computer being on, run the
+*Publish to the web* task.
 
 ## Regenerating the frames
 

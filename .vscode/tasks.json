@@ -1,0 +1,68 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "▶︎  Start the site  →  localhost:8123",
+      "detail": "Starts the local server and opens the site in your browser. Leave the panel open while you work.",
+      "type": "shell",
+      "command": "python3 -m http.server 8123 & sleep 1 && open http://localhost:8123 && wait",
+      "isBackground": true,
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true,
+        "group": "site"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "■  Stop the site",
+      "detail": "Shuts down the local server running on port 8123.",
+      "type": "shell",
+      "command": "PIDS=$(lsof -ti tcp:8123); if [ -n \"$PIDS\" ]; then kill $PIDS; echo 'Server stopped.'; else echo 'Nothing was running on 8123.'; fi",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "↻  Open the site in the browser",
+      "detail": "Opens localhost:8123. Start the site first if it is not already running.",
+      "type": "shell",
+      "command": "open http://localhost:8123",
+      "presentation": { "reveal": "silent", "panel": "shared" },
+      "problemMatcher": []
+    },
+    {
+      "label": "📱  Show the address for my phone",
+      "detail": "Prints the Wi-Fi address to open the site on a phone or tablet on the same network.",
+      "type": "shell",
+      "command": "IP=$(ipconfig getifaddr en0 || ipconfig getifaddr en1); echo ''; echo \"  Open this on your phone:  http://$IP:8123\"; echo ''",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "🚀  Publish to the web  (makes the site public)",
+      "detail": "Deploys to Vercel and gives you a permanent address. Opens a browser to sign in the first time. You can press Enter on every question.",
+      "type": "shell",
+      "command": "npx --yes vercel@latest --prod",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "problemMatcher": []
+    },
+    {
+      "label": "⬆︎  Save my changes to GitHub",
+      "detail": "Commits everything and pushes to the private repository.",
+      "type": "shell",
+      "command": "git add -A && git commit -m \"${input:commitMessage}\" && git push && echo '' && echo '  Pushed to https://github.com/rut1001/foz-atlantica'",
+      "presentation": { "reveal": "always", "panel": "shared", "clear": true },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "commitMessage",
+      "type": "promptString",
+      "description": "What did you change?",
+      "default": "Update the site"
+    }
+  ]
+}

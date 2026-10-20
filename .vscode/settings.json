@@ -1,0 +1,14 @@
+{
+  // Live Server ("Go Live" in the status bar) serves the site on the same
+  // port as the task, so localhost:8123 works either way.
+  "liveServer.settings.port": 8123,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.CustomBrowser": "chrome",
+
+  // The 943 frame files would otherwise flood search, the file tree and git.
+  "search.exclude": { "assets/frames/**": true },
+  "files.watcherExclude": { "**/assets/frames/**": true },
+
+  "files.associations": { "*.command": "shellscript" },
+  "editor.formatOnSave": false
+}
