@@ -141,6 +141,39 @@ moving image — the scrim and side wash hold it up, and that is a judgement
 rather than a measurement. Treat this as careful work, not as a conformance
 claim.
 
+## Security
+
+This is a static site, so the attack surface is small, but a review found four
+things worth recording:
+
+- **The dev server was handing out `.git/` to the whole network.** `serve.py`
+  binds to every interface so the site can be opened on a phone, which means
+  everyone on the Wi-Fi can reach it — and `http://<your-ip>:8123/.git/config`
+  returned 200. The full history was downloadable. Dotfiles and directory
+  listings are now refused. Path traversal was already blocked by Python's own
+  handler.
+- **The thank-you message built HTML from the visitor's name**, escaped by
+  stripping `<>&`. Blocklist escaping is the wrong shape of fix; the message is
+  now assembled from text nodes, and `<img src=x onerror=…>` renders as text.
+- **Every submission was written to `localStorage`** — name, email, phone,
+  message — and kept indefinitely for no benefit. That is gone, and because
+  deleting the code does not delete what it already stored on a visitor's
+  browser, the site now clears the old key on load.
+- **No Content-Security-Policy.** There is one now, in three places so it
+  survives wherever the site is hosted: a `<meta>` tag, `serve.py` response
+  headers, and `vercel.json`. It allows scripts and styles from this origin
+  only, fonts from Google, and no form posts at all. Verified that nothing is
+  blocked — fonts load, the canvas paints, the film runs.
+
+`vercel.json` also sets `nosniff`, `no-referrer`, `DENY` framing, HSTS and a
+`Permissions-Policy` denying geolocation, camera and microphone.
+
+**If you set `FORM_ENDPOINT`**, add that origin to `connect-src` in all three
+CSP copies or the request is blocked.
+
+Not done: no dependency scanning (there are no dependencies), no penetration
+test, and the site has never been exposed to the public internet.
+
 ## Before this goes live
 
 - **The enquiry form is not connected.** `FORM_ENDPOINT` at the top of

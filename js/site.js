@@ -506,23 +506,36 @@
       note.textContent = 'Thank you, ' + payload.name.trim().split(' ')[0] +
         '. The investment deck is on its way to ' + payload.email.trim() + '.';
     } else {
-      /* Demo build: nothing is transmitted. Set FORM_ENDPOINT above to go live. */
-      try {
-        const log = JSON.parse(localStorage.getItem('fa_enquiries') || '[]');
-        log.push(payload);
-        localStorage.setItem('fa_enquiries', JSON.stringify(log));
-      } catch (_) {}
-      console.warn('[Foz Atlântica] FORM_ENDPOINT is not configured — enquiry was stored locally only.', payload);
+      /* Demo build: nothing is transmitted, and nothing is kept. An earlier
+         version logged the whole submission to localStorage, which left a
+         real person's name, email and phone sitting in the browser forever
+         for no benefit. */
+      console.warn('[Foz Atlântica] FORM_ENDPOINT is not configured — this enquiry went nowhere.');
       form.classList.add('sent');
       note.className = 'form-note ok';
-      note.innerHTML = 'Thank you, ' + payload.name.trim().split(' ')[0].replace(/[<>&]/g, '') +
-        '. Your request has been recorded.<br>' +
-        '<i style="opacity:.6;font-size:12.5px">Demo build — no delivery endpoint is configured yet ' +
-        '(set <code>FORM_ENDPOINT</code> in js/site.js).</i>';
+      /* Built as text nodes rather than innerHTML: the name is user input,
+         and escaping it by stripping characters is the wrong shape of fix. */
+      note.textContent = '';
+      note.appendChild(document.createTextNode(
+        'Thank you, ' + payload.name.trim().split(' ')[0] + '. Your request has been recorded.'
+      ));
+      note.appendChild(document.createElement('br'));
+      const small = document.createElement('i');
+      small.className = 'form-note-sub';
+      small.textContent = 'Demo build — no delivery endpoint is configured yet '
+        + '(set FORM_ENDPOINT in js/site.js).';
+      note.appendChild(small);
     }
   });
 
   /* ── Boot ────────────────────────────────────────────────── */
+
+  /* An earlier build wrote each enquiry — name, email, phone, message — into
+     localStorage. Removing that code does not remove what it already stored
+     on the browsers of anyone who used it, so clear it on sight. Safe to
+     delete this once no old visitor is likely to return. */
+  try { localStorage.removeItem('fa_enquiries'); } catch (_) {}
+
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   let resizeT;

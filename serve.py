@@ -19,7 +19,44 @@ PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8123
 CODE = ('.html', '.css', '.js', '.json', '.map')
 
 
+# The form never posts anywhere today. If FORM_ENDPOINT in js/site.js is set
+# to an external URL, add that origin to connect-src or the fetch is blocked.
+CSP = (
+    "default-src 'self'; "
+    "script-src 'self'; "
+    "style-src 'self' https://fonts.googleapis.com; "
+    "font-src https://fonts.gstatic.com; "
+    "img-src 'self' data:; "
+    "connect-src 'self'; "
+    "form-action 'none'; "
+    "base-uri 'self'; "
+    "object-src 'none'; "
+    "frame-ancestors 'none'"
+)
+
+
 class Handler(http.server.SimpleHTTPRequestHandler):
+    def _is_hidden(self):
+        """Anything under a dot-directory or a dotfile: .git above all.
+
+        This server binds to every interface so the site can be opened on a
+        phone, which also means everyone on the network can reach it. Without
+        this, .git/ is downloadable and the whole history walks out.
+        """
+        path = self.path.split('?')[0].split('#')[0]
+        return any(seg.startswith('.') and seg not in ('', '.') for seg in path.split('/'))
+
+    def send_head(self):
+        if self._is_hidden():
+            self.send_error(404, 'Not Found')
+            return None
+        return super().send_head()
+
+    def list_directory(self, path):
+        # No directory indexes; they hand out the whole file tree.
+        self.send_error(404, 'Not Found')
+        return None
+
     def end_headers(self):
         path = self.path.split('?')[0].split('#')[0].lower()
         if path.endswith('/') or path.endswith(CODE):
@@ -28,6 +65,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.send_header('Expires', '0')
         else:
             self.send_header('Cache-Control', 'public, max-age=86400')
+        self.send_header('Content-Security-Policy', CSP)
+        self.send_header('X-Content-Type-Options', 'nosniff')
+        self.send_header('Referrer-Policy', 'no-referrer')
+        self.send_header('X-Frame-Options', 'DENY')
         super().end_headers()
 
     def log_message(self, fmt, *args):
@@ -45,6 +86,8 @@ try:
         print(f'  Foz Atlântica   →   http://localhost:{PORT}')
         print('')
         print('  Code is served uncached, so a normal refresh is enough.')
+        print('  Reachable by everyone on your network, so dotfiles (.git and')
+        print('  friends) and directory listings are blocked.')
         print('  Press Ctrl+C to stop.')
         print('')
         httpd.serve_forever()

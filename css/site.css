@@ -446,6 +446,7 @@ button,input,select,textarea{ font:inherit; color:inherit; }
 .form-note.err{ color:#D98077; }
 .cta-form.sent .field, .cta-form.sent .btn-solid{ display:none; }
 .cta-form.sent .form-note{ font-size:15px; color:var(--brass); text-align:left; margin:0; line-height:1.7; }
+.form-note-sub{ display:inline-block; margin-top:6px; opacity:.6; font-size:12.5px; font-style:italic; }
 
 /* footer */
 .site-foot{ padding:clamp(64px,8vh,100px) var(--pad) 48px; border-top:1px solid rgba(251,248,243,.14); }
