@@ -305,7 +305,7 @@
   });
 
   /* ── Render loop ─────────────────────────────────────────── */
-  let lastScrim = -1, lastRail = -1, lastSide = -1, lastSideFlip = null;
+  let lastScrim = -1, lastRail = -1, lastSide = -1, lastSideFlip = null, lastRailOp = -1;
 
   function render() {
     const y = window.scrollY;
@@ -386,6 +386,16 @@
       scrim.style.opacity = target.toFixed(3);
     }
 
+    /* The chapter rail navigates the film. Once the finale's reading content
+       scrolls up, it has nothing to point at and its labels collide with the
+       body text, so fade it out and let it return on the way back up. */
+    const railOp = inFinale ? Math.max(0, 1 - prog * 1.6) : 1;
+    if (Math.abs(railOp - lastRailOp) > 0.01) {
+      lastRailOp = railOp;
+      railEl.style.opacity = railOp.toFixed(3);
+      railEl.style.pointerEvents = railOp < 0.1 ? 'none' : 'auto';
+    }
+
     /* chrome */
     scrollLine.style.width = (y / docMax * 100).toFixed(2) + '%';
     if (active !== lastRail) {
@@ -421,6 +431,30 @@
     startBtn.querySelector('.btn-play-label').textContent = 'Begin the tour';
     loadMeter.style.width = '0%';
   }
+
+  /* ── Floor-plan tabs ─────────────────────────────────────── */
+  const planTabs = Array.from(document.querySelectorAll('.plan-tab'));
+  function showPlan(tab) {
+    planTabs.forEach(t => {
+      const on = t === tab;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+  }
+  planTabs.forEach((tab, i) => {
+    tab.tabIndex = i === 0 ? 0 : -1;
+    tab.addEventListener('click', () => showPlan(tab));
+    /* arrow keys move between tabs, as a tablist should */
+    tab.addEventListener('keydown', e => {
+      const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+      if (!d) return;
+      e.preventDefault();
+      const next = planTabs[(i + d + planTabs.length) % planTabs.length];
+      showPlan(next);
+      next.focus();
+    });
+  });
 
   /* ── Enquiry form ────────────────────────────────────────── */
   const form = document.getElementById('enquiryForm');

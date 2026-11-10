@@ -235,6 +235,68 @@
             and below comparable Atlantic frontage in Spain and south-west France.</p>
         </article>
       </div>
+
+      <!-- Schematic, not survey-accurate. Replace with a real map or a site
+           plan when one exists; the legend below describes the keys used. -->
+      <div class="map-wrap">
+        <svg viewBox="0 0 900 540" role="img" aria-label="Schematic map: Foz Atlântica sits on the Atlantic coast at the mouth of the Douro, fifteen minutes from Porto city centre and thirty from the airport.">
+          <defs>
+            <linearGradient id="sea" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1d3b42" stop-opacity=".55"/>
+              <stop offset="100%" stop-color="#1d3b42" stop-opacity=".12"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Atlantic -->
+          <path d="M0 0 H300 C280 120 272 240 286 360 C294 430 300 480 296 540 H0 Z" fill="url(#sea)"/>
+          <text x="92" y="268" fill="rgba(251,248,243,.34)" font-family="Cormorant Garamond, Georgia, serif" font-size="27" font-style="italic" letter-spacing="3">Atlantic Ocean</text>
+
+          <!-- coastline -->
+          <path d="M300 0 C280 120 272 240 286 360 C294 430 300 480 296 540" fill="none" stroke="rgba(251,248,243,.42)" stroke-width="1.6"/>
+
+          <!-- Douro, meeting the sea at the lower left -->
+          <path d="M296 452 C400 436 520 462 640 430 C740 404 820 418 900 400" fill="none" stroke="#1d3b42" stroke-opacity=".75" stroke-width="17" stroke-linecap="round"/>
+          <path d="M296 452 C400 436 520 462 640 430 C740 404 820 418 900 400" fill="none" stroke="rgba(251,248,243,.22)" stroke-width="1"/>
+          <text x="568" y="486" fill="rgba(251,248,243,.42)" font-family="Cormorant Garamond, Georgia, serif" font-size="20" font-style="italic" letter-spacing="2">Rio Douro</text>
+
+          <!-- built fabric, suggested only -->
+          <g stroke="rgba(251,248,243,.11)" stroke-width="1" fill="none">
+            <path d="M320 60 H900 M320 140 H900 M320 220 H900 M320 300 H900 M330 380 H900"/>
+            <path d="M400 0 V424 M490 0 V440 M580 0 V452 M670 0 V436 M760 0 V420 M850 0 V412"/>
+          </g>
+
+          <!-- site -->
+          <circle cx="330" cy="206" r="26" fill="none" stroke="var(--brass, #C6A063)" stroke-opacity=".4" stroke-width="1.4"/>
+          <circle cx="330" cy="206" r="14" fill="none" stroke="var(--brass, #C6A063)" stroke-opacity=".7" stroke-width="1.4"/>
+          <circle cx="330" cy="206" r="6.5" fill="#C6A063"/>
+          <text x="372" y="200" fill="#FBF8F3" font-family="Inter, Helvetica, sans-serif" font-size="17" font-weight="500">Foz Atlântica</text>
+          <text x="372" y="222" fill="rgba(251,248,243,.55)" font-family="Inter, Helvetica, sans-serif" font-size="12" letter-spacing="2.4">FOZ DO DOURO</text>
+
+          <!-- city centre -->
+          <circle cx="726" cy="300" r="5" fill="rgba(251,248,243,.8)"/>
+          <path d="M344 212 C470 250 600 282 718 298" fill="none" stroke="rgba(251,248,243,.3)" stroke-width="1.2" stroke-dasharray="5 6"/>
+          <text x="748" y="296" fill="rgba(251,248,243,.82)" font-family="Inter, Helvetica, sans-serif" font-size="14">Porto city centre</text>
+          <text x="748" y="317" fill="#C6A063" font-family="Inter, Helvetica, sans-serif" font-size="12" letter-spacing="1.6">15 MIN</text>
+
+          <!-- airport -->
+          <circle cx="648" cy="74" r="5" fill="rgba(251,248,243,.45)"/>
+          <path d="M340 190 C440 140 540 100 640 78" fill="none" stroke="rgba(251,248,243,.22)" stroke-width="1.2" stroke-dasharray="5 6"/>
+          <text x="670" y="70" fill="rgba(251,248,243,.7)" font-family="Inter, Helvetica, sans-serif" font-size="14">Francisco Sá Carneiro</text>
+          <text x="670" y="91" fill="#C6A063" font-family="Inter, Helvetica, sans-serif" font-size="12" letter-spacing="1.6">30 MIN</text>
+
+          <!-- orientation -->
+          <g transform="translate(830,486)">
+            <circle r="26" fill="none" stroke="rgba(251,248,243,.2)" stroke-width="1"/>
+            <path d="M0 -19 L5 0 L0 19 L-5 0 Z" fill="rgba(251,248,243,.62)"/>
+            <text x="0" y="-28" text-anchor="middle" fill="rgba(251,248,243,.62)" font-family="Inter, Helvetica, sans-serif" font-size="11" letter-spacing="1.5">N</text>
+          </g>
+        </svg>
+        <div class="map-legend">
+          <div><i class="k-site"></i>Foz Atlântica — the site</div>
+          <div><i class="k-city"></i>Porto city centre, 15 minutes by car</div>
+          <div><i class="k-air"></i>Francisco Sá Carneiro airport, 30 minutes</div>
+        </div>
+      </div>
     </section>
 
     <section class="panel" id="residences">
@@ -259,6 +321,211 @@
         <div><em>Tenure</em><span>Freehold. Open to non-resident and corporate buyers.</span></div>
         <div><em>Included</em><span>Fitted kitchen, wardrobes, climate control and one parking bay per residence.</span></div>
         <div><em>Management</em><span>Optional rental-management programme, with a furnishing package available.</span></div>
+      </div>
+    </section>
+
+    <section class="panel" id="plans">
+      <p class="eyebrow center">Floor plans</p>
+      <h2 class="display-m center">Four layouts</h2>
+
+      <!-- INVENTED — these are schematic layouts drawn to match the unit table
+           above, not architectural drawings. To swap in real plans, replace the
+           <svg> inside each .plan-figure with <img src="assets/plans/t1.png"
+           alt="T1 floor plan"> and update the room list beside it. -->
+      <div class="plan-tabs" role="tablist" aria-label="Floor plan types">
+        <button class="plan-tab" role="tab" id="tab-t1" aria-controls="panel-t1" aria-selected="true">T1</button>
+        <button class="plan-tab" role="tab" id="tab-t2" aria-controls="panel-t2" aria-selected="false">T2</button>
+        <button class="plan-tab" role="tab" id="tab-t3" aria-controls="panel-t3" aria-selected="false">T3</button>
+        <button class="plan-tab" role="tab" id="tab-pt" aria-controls="panel-pt" aria-selected="false">Penthouse</button>
+      </div>
+
+      <!-- ── T1 ── -->
+      <div class="plan-panel" id="panel-t1" role="tabpanel" aria-labelledby="tab-t1">
+        <div class="plan-grid">
+          <div class="plan-figure">
+            <svg viewBox="0 0 880 560" role="img" aria-label="T1 schematic plan: terrace, open living and kitchen, hall, one bedroom and a bathroom.">
+              <text class="oc" x="34" y="300" transform="rotate(-90 34 300)">Atlantic · west</text>
+              <g class="terrace"><rect x="60" y="70" width="140" height="420" rx="2"/></g>
+              <text x="130" y="274">TERRACE</text><text class="a" x="130" y="294">14 m²</text>
+              <g class="rm"><rect x="200" y="70" width="320" height="420"/></g>
+              <text x="360" y="266">LIVING · DINING</text><text x="360" y="286">KITCHEN</text><text class="a" x="360" y="308">32 m²</text>
+              <g class="rm"><rect x="520" y="70" width="80" height="420"/></g>
+              <text x="560" y="276">HALL</text><text class="a" x="560" y="296">6 m²</text>
+              <g class="rm"><rect x="600" y="70" width="220" height="250"/></g>
+              <text x="710" y="188">BEDROOM</text><text class="a" x="710" y="208">16 m²</text>
+              <g class="rm"><rect x="600" y="320" width="220" height="170"/></g>
+              <text x="710" y="398">BATHROOM</text><text class="a" x="710" y="418">5 m²</text>
+              <path d="M856 280 L820 280 M830 270 L820 280 L830 290" fill="none" stroke="rgba(251,248,243,.5)" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="plan-meta">
+            <h3>T1</h3>
+            <p class="plan-sub">One bedroom · one bathroom</p>
+            <ul class="plan-rooms">
+              <li><span>Living, dining and kitchen</span><span>32 m²</span></li>
+              <li><span>Bedroom</span><span>16 m²</span></li>
+              <li><span>Bathroom</span><span>5 m²</span></li>
+              <li><span>Hall and storage</span><span>6 m²</span></li>
+              <li><span>Terrace, west-facing</span><span>14 m²</span></li>
+              <li class="is-total"><span>Interior, this layout</span><span>71 m²</span></li>
+            </ul>
+            <p class="plan-note">Eight T1 residences in the release, 68–74 m² interior.
+              Plans are schematic and indicative only.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── T2 ── -->
+      <div class="plan-panel" id="panel-t2" role="tabpanel" aria-labelledby="tab-t2" hidden>
+        <div class="plan-grid">
+          <div class="plan-figure">
+            <svg viewBox="0 0 880 560" role="img" aria-label="T2 schematic plan: terrace, open living and kitchen, hall, principal bedroom with en-suite, second bedroom and a bathroom.">
+              <text class="oc" x="34" y="300" transform="rotate(-90 34 300)">Atlantic · west</text>
+              <g class="terrace"><rect x="60" y="70" width="145" height="420" rx="2"/></g>
+              <text x="132" y="274">TERRACE</text><text class="a" x="132" y="294">21 m²</text>
+              <g class="rm"><rect x="205" y="70" width="315" height="420"/></g>
+              <text x="362" y="266">LIVING · DINING</text><text x="362" y="286">KITCHEN</text><text class="a" x="362" y="308">42 m²</text>
+              <g class="rm"><rect x="520" y="70" width="70" height="420"/></g>
+              <text x="555" y="276">HALL</text><text class="a" x="555" y="296">10 m²</text>
+              <g class="rm"><rect x="590" y="70" width="230" height="170"/></g>
+              <text x="705" y="148">PRINCIPAL</text><text class="a" x="705" y="168">19 m²</text>
+              <g class="rm"><rect x="590" y="240" width="115" height="110"/></g>
+              <text x="647" y="290">EN-SUITE</text><text class="a" x="647" y="310">6 m²</text>
+              <g class="rm"><rect x="705" y="240" width="115" height="110"/></g>
+              <text x="762" y="290">BATH</text><text class="a" x="762" y="310">5 m²</text>
+              <g class="rm"><rect x="590" y="350" width="230" height="140"/></g>
+              <text x="705" y="413">BEDROOM 2</text><text class="a" x="705" y="433">14 m²</text>
+              <path d="M856 280 L820 280 M830 270 L820 280 L830 290" fill="none" stroke="rgba(251,248,243,.5)" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="plan-meta">
+            <h3>T2</h3>
+            <p class="plan-sub">Two bedrooms · two bathrooms</p>
+            <ul class="plan-rooms">
+              <li><span>Living, dining and kitchen</span><span>42 m²</span></li>
+              <li><span>Principal bedroom</span><span>19 m²</span></li>
+              <li><span>Principal en-suite</span><span>6 m²</span></li>
+              <li><span>Bedroom 2</span><span>14 m²</span></li>
+              <li><span>Second bathroom</span><span>5 m²</span></li>
+              <li><span>Hall and storage</span><span>10 m²</span></li>
+              <li><span>Terrace, west-facing</span><span>21 m²</span></li>
+              <li class="is-total"><span>Interior, this layout</span><span>104 m²</span></li>
+            </ul>
+            <p class="plan-note">Twelve T2 residences in the release, 96–112 m² interior.
+              Plans are schematic and indicative only.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── T3 ── -->
+      <div class="plan-panel" id="panel-t3" role="tabpanel" aria-labelledby="tab-t3" hidden>
+        <div class="plan-grid">
+          <div class="plan-figure">
+            <svg viewBox="0 0 1000 560" role="img" aria-label="T3 schematic plan: terrace, living and dining, separate kitchen, hall, principal suite with dressing room and en-suite, two further bedrooms, bathroom and a cloakroom.">
+              <text class="oc" x="28" y="300" transform="rotate(-90 28 300)">Atlantic · west</text>
+              <g class="terrace"><rect x="50" y="70" width="150" height="420" rx="2"/></g>
+              <text x="125" y="274">TERRACE</text><text class="a" x="125" y="294">32 m²</text>
+              <g class="rm"><rect x="200" y="70" width="270" height="260"/></g>
+              <text x="335" y="192">LIVING · DINING</text><text class="a" x="335" y="212">46 m²</text>
+              <g class="rm"><rect x="200" y="330" width="270" height="160"/></g>
+              <text x="335" y="402">KITCHEN</text><text class="a" x="335" y="422">16 m²</text>
+              <g class="rm"><rect x="470" y="70" width="75" height="420"/></g>
+              <text x="507" y="276">HALL</text><text class="a" x="507" y="296">11 m²</text>
+              <g class="rm"><rect x="545" y="70" width="215" height="180"/></g>
+              <text x="652" y="152">PRINCIPAL</text><text class="a" x="652" y="172">22 m²</text>
+              <g class="rm"><rect x="760" y="70" width="190" height="90"/></g>
+              <text x="855" y="110">DRESSING</text><text class="a" x="855" y="130">6 m²</text>
+              <g class="rm"><rect x="760" y="160" width="190" height="90"/></g>
+              <text x="855" y="200">EN-SUITE</text><text class="a" x="855" y="220">8 m²</text>
+              <g class="rm"><rect x="545" y="250" width="205" height="130"/></g>
+              <text x="647" y="308">BEDROOM 2</text><text class="a" x="647" y="328">15 m²</text>
+              <g class="rm"><rect x="750" y="250" width="200" height="130"/></g>
+              <text x="850" y="308">BATHROOM</text><text class="a" x="850" y="328">6 m²</text>
+              <g class="rm"><rect x="545" y="380" width="205" height="110"/></g>
+              <text x="647" y="428">BEDROOM 3</text><text class="a" x="647" y="448">14 m²</text>
+              <g class="rm"><rect x="750" y="380" width="200" height="110"/></g>
+              <text x="850" y="428">WC</text><text class="a" x="850" y="448">3 m²</text>
+              <path d="M984 280 L950 280 M960 270 L950 280 L960 290" fill="none" stroke="rgba(251,248,243,.5)" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="plan-meta">
+            <h3>T3</h3>
+            <p class="plan-sub">Three bedrooms · three bathrooms</p>
+            <ul class="plan-rooms">
+              <li><span>Living and dining</span><span>46 m²</span></li>
+              <li><span>Kitchen</span><span>16 m²</span></li>
+              <li><span>Principal bedroom</span><span>22 m²</span></li>
+              <li><span>Dressing room</span><span>6 m²</span></li>
+              <li><span>Principal en-suite</span><span>8 m²</span></li>
+              <li><span>Bedroom 2</span><span>15 m²</span></li>
+              <li><span>Bedroom 3</span><span>14 m²</span></li>
+              <li><span>Bathroom and cloakroom</span><span>9 m²</span></li>
+              <li><span>Hall and storage</span><span>11 m²</span></li>
+              <li><span>Terrace, west-facing</span><span>32 m²</span></li>
+              <li class="is-total"><span>Interior, this layout</span><span>147 m²</span></li>
+            </ul>
+            <p class="plan-note">Six T3 residences in the release, 138–156 m² interior.
+              Plans are schematic and indicative only.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Penthouse ── -->
+      <div class="plan-panel" id="panel-pt" role="tabpanel" aria-labelledby="tab-pt" hidden>
+        <div class="plan-grid">
+          <div class="plan-figure">
+            <svg viewBox="0 0 1000 600" role="img" aria-label="Penthouse schematic plan: wraparound terrace, living and dining, kitchen, study, principal suite with dressing room and en-suite, and three further bedrooms.">
+              <text class="oc" x="26" y="300" transform="rotate(-90 26 300)">Atlantic · west</text>
+              <g class="terrace"><rect x="40" y="60" width="150" height="480" rx="2"/></g>
+              <g class="terrace"><rect x="190" y="440" width="770" height="100" rx="2"/></g>
+              <text x="115" y="292">TERRACE</text><text class="a" x="115" y="312">118 m²</text>
+              <text x="575" y="496">WRAPAROUND TERRACE</text>
+              <g class="rm"><rect x="190" y="60" width="310" height="230"/></g>
+              <text x="345" y="167">LIVING · DINING</text><text class="a" x="345" y="187">58 m²</text>
+              <g class="rm"><rect x="190" y="290" width="230" height="150"/></g>
+              <text x="305" y="357">KITCHEN</text><text class="a" x="305" y="377">22 m²</text>
+              <g class="rm"><rect x="420" y="290" width="80" height="150"/></g>
+              <text x="460" y="357">STUDY</text><text class="a" x="460" y="377">9 m²</text>
+              <g class="rm"><rect x="500" y="60" width="70" height="380"/></g>
+              <text x="535" y="242">HALL</text><text class="a" x="535" y="262">16 m²</text>
+              <g class="rm"><rect x="570" y="60" width="230" height="170"/></g>
+              <text x="685" y="138">PRINCIPAL</text><text class="a" x="685" y="158">28 m²</text>
+              <g class="rm"><rect x="800" y="60" width="160" height="85"/></g>
+              <text x="880" y="98">DRESSING</text><text class="a" x="880" y="118">9 m²</text>
+              <g class="rm"><rect x="800" y="145" width="160" height="85"/></g>
+              <text x="880" y="183">EN-SUITE</text><text class="a" x="880" y="203">12 m²</text>
+              <g class="rm"><rect x="570" y="230" width="190" height="110"/></g>
+              <text x="665" y="278">BEDROOM 2</text><text class="a" x="665" y="298">18 m²</text>
+              <g class="rm"><rect x="760" y="230" width="200" height="110"/></g>
+              <text x="860" y="278">EN-SUITE 2</text><text class="a" x="860" y="298">6 m²</text>
+              <g class="rm"><rect x="570" y="340" width="190" height="100"/></g>
+              <text x="665" y="383">BEDROOM 3</text><text class="a" x="665" y="403">16 m²</text>
+              <g class="rm"><rect x="760" y="340" width="200" height="100"/></g>
+              <text x="860" y="383">BEDROOM 4</text><text class="a" x="860" y="403">15 m²</text>
+              <path d="M984 250 L960 250 M970 240 L960 250 L970 260" fill="none" stroke="rgba(251,248,243,.5)" stroke-width="1.6"/>
+            </svg>
+          </div>
+          <div class="plan-meta">
+            <h3>Penthouse</h3>
+            <p class="plan-sub">Four bedrooms · four bathrooms</p>
+            <ul class="plan-rooms">
+              <li><span>Living and dining</span><span>58 m²</span></li>
+              <li><span>Kitchen</span><span>22 m²</span></li>
+              <li><span>Study</span><span>9 m²</span></li>
+              <li><span>Principal bedroom</span><span>28 m²</span></li>
+              <li><span>Dressing room</span><span>9 m²</span></li>
+              <li><span>Principal en-suite</span><span>12 m²</span></li>
+              <li><span>Bedroom 2 with en-suite</span><span>24 m²</span></li>
+              <li><span>Bedrooms 3 and 4</span><span>31 m²</span></li>
+              <li><span>Bathrooms and cloakroom</span><span>21 m²</span></li>
+              <li><span>Hall and storage</span><span>16 m²</span></li>
+              <li><span>Wraparound terrace</span><span>118 m²</span></li>
+              <li class="is-total"><span>Interior, this layout</span><span>230 m²</span></li>
+            </ul>
+            <p class="plan-note">Two penthouses, 212–248 m² interior, each with terraces
+              on three sides. Plans are schematic and indicative only.</p>
+          </div>
+        </div>
       </div>
     </section>
 

@@ -431,6 +431,88 @@ button,input,select,textarea{ font:inherit; color:inherit; }
 .disclaimer{ font-size:11.5px; line-height:1.75; color:rgba(251,248,243,.36); max-width:none; margin:0 0 26px; }
 .colophon{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:rgba(251,248,243,.28); margin:0; }
 
+/* ── LOCATION MAP ─────────────────────────────────────────── */
+.map-wrap{
+  margin-top:56px; border:1px solid rgba(251,248,243,.14);
+  background:rgba(10,8,6,.45); border-radius:3px; overflow:hidden;
+}
+.map-wrap svg{ display:block; width:100%; height:auto; }
+.map-legend{
+  display:flex; flex-wrap:wrap; gap:28px;
+  padding:20px clamp(18px,2.5vw,30px);
+  border-top:1px solid rgba(251,248,243,.12);
+}
+.map-legend div{ display:flex; align-items:center; gap:10px; font-size:12.5px; color:rgba(251,248,243,.68); }
+.map-legend i{ width:9px; height:9px; border-radius:50%; flex:none; }
+.map-legend .k-site{ background:var(--brass); }
+.map-legend .k-city{ background:rgba(251,248,243,.75); }
+.map-legend .k-air{ background:rgba(251,248,243,.4); }
+
+/* ── FLOOR PLANS ──────────────────────────────────────────── */
+.plan-tabs{
+  display:flex; flex-wrap:wrap; gap:0;
+  border:1px solid rgba(251,248,243,.18); border-radius:999px;
+  padding:4px; margin:0 auto 44px; width:fit-content; max-width:100%;
+}
+.plan-tab{
+  appearance:none; background:none; border:0; cursor:pointer;
+  padding:11px 26px; border-radius:999px; color:rgba(251,248,243,.62);
+  font-size:11px; letter-spacing:.18em; text-transform:uppercase;
+  transition:background .3s var(--ease), color .3s var(--ease);
+  white-space:nowrap;
+}
+.plan-tab:hover{ color:var(--bone); }
+.plan-tab[aria-selected="true"]{ background:var(--brass); color:#1B1408; font-weight:600; }
+
+.plan-panel[hidden]{ display:none; }
+.plan-grid{ display:grid; grid-template-columns:1.9fr 1fr; gap:clamp(28px,4vw,56px); align-items:start; }
+.plan-figure{
+  border:1px solid rgba(251,248,243,.14); border-radius:3px;
+  background:rgba(10,8,6,.4); padding:clamp(14px,2vw,26px);
+}
+.plan-figure svg{ display:block; width:100%; height:auto; }
+.plan-figure .rm rect{ fill:rgba(251,248,243,.035); stroke:rgba(251,248,243,.48); stroke-width:2.2; }
+.plan-figure .terrace rect{ fill:rgba(198,160,99,.1); stroke:rgba(198,160,99,.45); stroke-dasharray:6 5; }
+.plan-figure text{
+  font-family:var(--sans); font-size:21px; letter-spacing:2px;
+  fill:rgba(251,248,243,.8); text-anchor:middle;
+}
+.plan-figure text.a{ font-size:17.5px; letter-spacing:1px; fill:var(--brass); }
+.plan-figure text.oc{
+  font-family:var(--serif); font-style:italic; font-size:24px; letter-spacing:2px;
+  fill:rgba(251,248,243,.42);
+}
+
+.plan-meta h3{
+  font-family:var(--serif); font-weight:300; font-size:clamp(28px,3.4vw,42px);
+  margin:0 0 6px; letter-spacing:-.01em;
+}
+.plan-meta .plan-sub{
+  font-size:10.5px; letter-spacing:.22em; text-transform:uppercase;
+  color:var(--brass); margin:0 0 28px;
+}
+.plan-rooms{ list-style:none; padding:0; margin:0 0 28px; }
+.plan-rooms li{
+  display:flex; justify-content:space-between; gap:18px;
+  padding:11px 0; border-bottom:1px solid rgba(251,248,243,.1);
+  font-size:14px; color:rgba(251,248,243,.78);
+}
+.plan-rooms li span:last-child{ color:var(--brass); white-space:nowrap; }
+.plan-rooms li.is-total{
+  border-bottom:0; border-top:1px solid rgba(251,248,243,.24);
+  margin-top:6px; padding-top:16px; color:var(--bone);
+}
+.plan-note{ font-size:12px; line-height:1.65; color:rgba(251,248,243,.45); margin:0; }
+
+@media (max-width: 900px){
+  .plan-grid{ grid-template-columns:1fr; }
+  .plan-tab{ padding:10px 18px; font-size:10px; letter-spacing:.12em; }
+  /* A plan squeezed to phone width has illegible labels. Hold a readable
+     width and scroll sideways inside the frame instead. */
+  .plan-figure{ overflow-x:auto; -webkit-overflow-scrolling:touch; }
+  .plan-figure svg{ min-width:620px; }
+}
+
 /* ── DEMONSTRATION NOTICE ─────────────────────────────────── */
 /* Deliberately out-of-band: this must not read as part of the marketing. */
 .demo-notice{
