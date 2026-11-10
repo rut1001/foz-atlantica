@@ -73,7 +73,7 @@ and reloads the page automatically whenever you save a file.
 Double-click `start.command`, or run from this folder:
 
 ```bash
-python3 -m http.server 8123
+python3 serve.py
 ```
 
 Then open http://localhost:8123.
@@ -81,6 +81,12 @@ Then open http://localhost:8123.
 The site needs a server because it loads 943 image files by relative path.
 Double-clicking `index.html` itself is not reliable — browsers restrict what a
 page opened from `file://` may load, and it varies by browser.
+
+`serve.py` is a thin wrapper around Python's own static server. The one thing
+it adds is cache headers: HTML, CSS and JS are sent `no-store`, so an edit
+always shows up on an ordinary refresh, while images keep a normal cache so the
+54MB of frames are not refetched every time. Plain `python3 -m http.server`
+leaves code cached, which repeatedly made edits look like they had not landed.
 
 **The local server stops when you close its panel, quit VS Code or restart the
 machine.** That is normal, and it is why the address goes dead — just start it

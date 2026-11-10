@@ -18,7 +18,7 @@ echo ""
 echo "  Leave this window open. Press Ctrl+C (or close it) to stop the server."
 echo ""
 
-python3 -m http.server "$PORT" >/dev/null 2>&1 &
+python3 serve.py "$PORT" >/dev/null 2>&1 &
 SERVER_PID=$!
 trap 'kill $SERVER_PID 2>/dev/null' EXIT
 

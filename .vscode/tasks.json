@@ -5,7 +5,7 @@
       "label": "▶︎  Start the site  →  localhost:8123",
       "detail": "Starts the local server and opens the site in your browser. Leave the panel open while you work.",
       "type": "shell",
-      "command": "python3 -m http.server 8123 & sleep 1 && open http://localhost:8123 && wait",
+      "command": "python3 serve.py & sleep 1 && open http://localhost:8123 && wait",
       "isBackground": true,
       "group": { "kind": "build", "isDefault": true },
       "presentation": {
