@@ -159,10 +159,21 @@ things worth recording:
   message — and kept indefinitely for no benefit. That is gone, and because
   deleting the code does not delete what it already stored on a visitor's
   browser, the site now clears the old key on load.
+- **The dotfile block was bypassable.** The first version of the fix checked
+  the URL text, but the handler percent-decodes the path afterwards, so
+  `/%2egit/config` walked straight past it and returned the real file. The
+  check now runs on the resolved filesystem path, after decoding and after
+  `realpath`, which also stops a symlink from leading out of the project.
+  Thirteen encoding variants were tried against it; all return 404.
+- **Google Fonts was the only third-party dependency.** Every visitor's IP
+  reached Google, and the stylesheet could not be pinned with SRI. The two
+  families are now self-hosted from `assets/fonts` (6 files, 272KB, Latin and
+  Latin-Extended), so the page makes no external request at all and the policy
+  below is `'self'` throughout.
 - **No Content-Security-Policy.** There is one now, in three places so it
   survives wherever the site is hosted: a `<meta>` tag, `serve.py` response
-  headers, and `vercel.json`. It allows scripts and styles from this origin
-  only, fonts from Google, and no form posts at all. Verified that nothing is
+  headers, and `vercel.json`. Every directive is `'self'`, with no
+  form posts permitted at all. Verified that nothing is
   blocked — fonts load, the canvas paints, the film runs.
 
 `vercel.json` also sets `nosniff`, `no-referrer`, `DENY` framing, HSTS and a

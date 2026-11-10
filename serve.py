@@ -24,8 +24,8 @@ CODE = ('.html', '.css', '.js', '.json', '.map')
 CSP = (
     "default-src 'self'; "
     "script-src 'self'; "
-    "style-src 'self' https://fonts.googleapis.com; "
-    "font-src https://fonts.gstatic.com; "
+    "style-src 'self'; "
+    "font-src 'self'; "
     "img-src 'self' data:; "
     "connect-src 'self'; "
     "form-action 'none'; "
@@ -36,21 +36,38 @@ CSP = (
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
-    def _is_hidden(self):
-        """Anything under a dot-directory or a dotfile: .git above all.
+    def _is_allowed(self):
+        """Decide on the resolved filesystem path, never on the URL.
 
-        This server binds to every interface so the site can be opened on a
-        phone, which also means everyone on the network can reach it. Without
-        this, .git/ is downloadable and the whole history walks out.
+        Checking the URL text is not enough: the handler percent-decodes it
+        afterwards, so `/%2egit/config` sails past a check for a leading dot
+        and still lands on `.git/config`. Resolving the path first means the
+        decoding and any `..` have already happened, and realpath collapses
+        symlinks, so a link pointing out of the project cannot be followed
+        either.
         """
-        path = self.path.split('?')[0].split('#')[0]
-        return any(seg.startswith('.') and seg not in ('', '.') for seg in path.split('/'))
+        try:
+            target = os.path.realpath(self.translate_path(self.path))
+        except (OSError, ValueError):
+            return False
+
+        if target != ROOT and not target.startswith(ROOT + os.sep):
+            return False  # escaped the project directory
+
+        rel = os.path.relpath(target, ROOT)
+        return not any(
+            seg.startswith('.') for seg in rel.split(os.sep) if seg not in ('', '.')
+        )
 
     def send_head(self):
-        if self._is_hidden():
+        if not self._is_allowed():
             self.send_error(404, 'Not Found')
             return None
         return super().send_head()
+
+    def version_string(self):
+        # Default advertises the exact Python and handler version.
+        return 'Foz'
 
     def list_directory(self, path):
         # No directory indexes; they hand out the whole file tree.
@@ -78,6 +95,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.path.realpath(os.getcwd())
 socketserver.TCPServer.allow_reuse_address = True
 
 try:
