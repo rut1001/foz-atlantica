@@ -17,9 +17,16 @@
 </head>
 <body>
 
+<nav class="skip-links" aria-label="Skip links">
+  <a href="#tour-text">Skip the film, read the tour</a>
+  <a href="#numbers">Skip to the figures</a>
+  <a href="#enquire">Skip to contact</a>
+</nav>
+
 <!-- ══ FILM STAGE ══ -->
 <div class="stage">
-  <canvas id="film"></canvas>
+  <!-- Decorative: everything the film shows is written out in #tour-text. -->
+  <canvas id="film" aria-hidden="true"></canvas>
   <div class="stage-scrim" id="scrim"></div>
   <div class="stage-side" id="side"></div>
   <div class="stage-vignette"></div>
@@ -40,6 +47,57 @@
 
 <!-- ══ CHAPTER RAIL ══ -->
 <nav class="rail" id="rail" aria-label="Chapters"></nav>
+
+<!--
+  The visual tour lives on a canvas, and its captions appear and disappear
+  with scroll position — so for a screen reader almost none of it exists.
+  This is the same narrative as plain text, in order, read once.
+  The caption scenes below are therefore aria-hidden (they are pure
+  duplication); the gates keep their text, because it gives the button next
+  to it its meaning. If you edit the copy there, edit it here too.
+-->
+<section class="sr-only" id="tour-text" tabindex="-1" aria-label="The tour, in text">
+  <h2>The tour</h2>
+  <p>A scroll-driven film moves through the building, from the roof terrace down
+    into a residence and out again over the Atlantic. Its seven chapters are:</p>
+
+  <h3>1. The arrival</h3>
+  <p>A residents' roof deck with a heated infinity pool, a sun terrace and two spa
+    baths, set forty metres back from the shoreline. All twenty-eight residences
+    face west; there are no north-facing units and no internal courtyards.</p>
+
+  <h3>2. The living floor</h3>
+  <p>Open-plan living and dining with 9.2 metres of west-facing glazing, wide-board
+    oak flooring and a stone fireplace. Sliding doors open the full width onto the
+    terrace. West-facing glazing brings direct sun into the living space from midday
+    until sunset.</p>
+
+  <h3>3. The kitchen</h3>
+  <p>Natural oak cabinetry, a honed marble island with integrated wine storage, and
+    fully integrated appliances throughout. Bedrooms are grouped behind a single
+    door, away from the living and entertaining space.</p>
+
+  <h3>4. The principal suite</h3>
+  <p>The principal bedroom opens onto a private terrace, with a walk-in dressing
+    room and an en-suite bathroom facing open water. Terraces run from 12 to 140
+    square metres; sliding walls retract fully into the structure.</p>
+
+  <h3>5. The principal bathroom</h3>
+  <p>Full-height Estremoz marble, a freestanding stone bath set into the window
+    line, and a walk-in rain shower behind low-iron glass. Hydronic underfloor
+    heating and mechanical ventilation with heat recovery throughout, targeting an
+    A2 energy certificate.</p>
+
+  <h3>6. Residents' amenities</h3>
+  <p>A residents' gym facing the sea, daytime concierge, secure underground parking
+    with one bay per residence, climate-controlled storage and private beach access.
+    The gym has cardio and resistance equipment, a stretch studio, and a treatment
+    room bookable through the concierge.</p>
+
+  <h3>7. The investment</h3>
+  <p>Pricing, unit mix, specification and the planning context follow below in the
+    main content of the page.</p>
+</section>
 
 <!-- ══ FIXED OVERLAY LAYER (chapters 1–6) ══ -->
 <div class="overlay" id="overlay">
@@ -68,7 +126,7 @@
   </section>
 
   <!-- GATES + CAPTIONS -->
-  <section class="scene scene-cap" data-ch="1" data-role="cap0">
+  <section class="scene scene-cap" data-ch="1" data-role="cap0" aria-hidden="true">
     <div class="cap cap-left">
       <p class="eyebrow">01 — The Arrival</p>
       <h2 class="display-s">The roof terrace</h2>
@@ -76,7 +134,7 @@
         set forty metres back from the shoreline.</p>
     </div>
   </section>
-  <section class="scene scene-cap" data-ch="1" data-role="cap1">
+  <section class="scene scene-cap" data-ch="1" data-role="cap1" aria-hidden="true">
     <div class="cap cap-right">
       <h2 class="display-s">West-facing throughout</h2>
       <p>All twenty-eight residences face west. There are no north-facing units and no
@@ -94,7 +152,7 @@
       <button class="btn-play" data-ch="2"><span class="btn-play-label">Step inside</span><span class="btn-play-meter"><i></i></span></button>
     </div>
   </section>
-  <section class="scene scene-cap" data-ch="2" data-role="cap0">
+  <section class="scene scene-cap" data-ch="2" data-role="cap0" aria-hidden="true">
     <div class="cap cap-left">
       <h2 class="display-s">Afternoon and evening light</h2>
       <p>West-facing glazing brings direct sun into the living space from midday until sunset.</p>
@@ -110,7 +168,7 @@
       <button class="btn-play" data-ch="3"><span class="btn-play-label">See the kitchen</span><span class="btn-play-meter"><i></i></span></button>
     </div>
   </section>
-  <section class="scene scene-cap" data-ch="3" data-role="cap0">
+  <section class="scene scene-cap" data-ch="3" data-role="cap0" aria-hidden="true">
     <div class="cap cap-right">
       <h2 class="display-s">A separate sleeping wing</h2>
       <p>Bedrooms are grouped behind a single door, away from the living and entertaining space.</p>
@@ -126,7 +184,7 @@
       <button class="btn-play" data-ch="4"><span class="btn-play-label">Enter the suite</span><span class="btn-play-meter"><i></i></span></button>
     </div>
   </section>
-  <section class="scene scene-cap" data-ch="4" data-role="cap0">
+  <section class="scene scene-cap" data-ch="4" data-role="cap0" aria-hidden="true">
     <div class="cap cap-left">
       <h2 class="display-s">Terraces from 12 to 140 m²</h2>
       <p>Sliding walls retract fully into the structure, so the terrace works as an extension
@@ -143,7 +201,7 @@
       <button class="btn-play" data-ch="5"><span class="btn-play-label">See the bathroom</span><span class="btn-play-meter"><i></i></span></button>
     </div>
   </section>
-  <section class="scene scene-cap" data-ch="5" data-role="cap0">
+  <section class="scene scene-cap" data-ch="5" data-role="cap0" aria-hidden="true">
     <div class="cap cap-right">
       <h2 class="display-s">Building services</h2>
       <p>Hydronic underfloor heating and mechanical ventilation with heat recovery throughout.
@@ -160,7 +218,7 @@
       <button class="btn-play" data-ch="6"><span class="btn-play-label">See the amenities</span><span class="btn-play-meter"><i></i></span></button>
     </div>
   </section>
-  <section class="scene scene-cap" data-ch="6" data-role="cap0">
+  <section class="scene scene-cap" data-ch="6" data-role="cap0" aria-hidden="true">
     <div class="cap cap-left">
       <h2 class="display-s">The gym</h2>
       <p>Cardio and resistance equipment, a stretch studio, and a treatment room bookable
@@ -544,8 +602,8 @@
           </ul>
         </div>
         <form class="cta-form" id="enquiryForm" novalidate>
-          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
-          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required aria-describedby="formNote"></div>
+          <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required aria-describedby="formNote"></div>
           <div class="field"><label for="f-phone">Phone <i>(optional)</i></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
           <div class="field"><label for="f-intent">I would like to</label>
             <select id="f-intent" name="intent">
@@ -565,7 +623,7 @@
           </div>
           <div class="field"><label for="f-msg">Anything we should know <i>(optional)</i></label><textarea id="f-msg" name="message" rows="3"></textarea></div>
           <button class="btn-solid" type="submit">Request brochure</button>
-          <p class="form-note" id="formNote">We respond to every enquiry directly.</p>
+          <p class="form-note" id="formNote" role="status" aria-live="polite">We respond to every enquiry directly.</p>
         </form>
       </div>
     </section>

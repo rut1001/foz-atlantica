@@ -196,7 +196,9 @@
   /* ── Finale loop ─────────────────────────────────────────── */
   let loopOn = false, loopT0 = 0;
   function startLoop() {
-    if (loopOn) return;
+    /* An unprompted, endlessly looping video is exactly what this preference
+       is asking us not to do. Hold the first frame instead. */
+    if (loopOn || reduceMotion) return;
     loopOn = true; loopT0 = performance.now();
     loadSeq(7);
   }
@@ -294,13 +296,18 @@
 
   /* smooth in-page anchors */
   document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
+    a.addEventListener('click', async e => {
       const id = a.getAttribute('href').slice(1);
-      if (id === 'top') { e.preventDefault(); scrollTween(0, 1000, easeInOut); return; }
+      if (id === 'top') { e.preventDefault(); scrollTween(0, reduceMotion ? 0 : 1000, easeInOut); return; }
       const t = document.getElementById(id);
       if (!t) return;
       e.preventDefault();
-      scrollTween(t.getBoundingClientRect().top + window.scrollY, 1100, easeInOut);
+      await scrollTween(t.getBoundingClientRect().top + window.scrollY,
+                        reduceMotion ? 0 : 1100, easeInOut);
+      /* Scrolling alone leaves a keyboard user's focus back at the link, so
+         the next Tab returns them to where they just skipped away from. */
+      if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+      t.focus({ preventScroll: true });
     });
   });
 
@@ -463,14 +470,19 @@
     e.preventDefault();
     const name = document.getElementById('f-name'), email = document.getElementById('f-email');
     let bad = false;
+    let firstBad = null;
     [name, email].forEach(f => {
       const ok = f.value.trim() && (f.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(f.value.trim()));
       f.classList.toggle('invalid', !ok);
-      if (!ok) bad = true;
+      f.setAttribute('aria-invalid', ok ? 'false' : 'true');
+      if (!ok) { bad = true; firstBad = firstBad || f; }
     });
     if (bad) {
       note.className = 'form-note err';
       note.textContent = 'Please add your name and a valid email address.';
+      /* role="status" on the note announces this; move focus so a keyboard
+         user lands on the field that needs fixing rather than hunting. */
+      if (firstBad) firstBad.focus();
       return;
     }
     const payload = Object.fromEntries(new FormData(form).entries());

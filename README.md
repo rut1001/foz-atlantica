@@ -109,6 +109,38 @@ for i in 4 5 6; do mkdir -p assets/frames/c$i && ffmpeg -i $i.mp4 -vf scale=1280
 Then update the `frames` and `dur` values in the `CH` table at the top of
 `js/site.js` to match `ffprobe`'s reported frame count and duration.
 
+## Accessibility
+
+The hard part of a site like this is that the content is a canvas: a screen
+reader sees nothing, and the captions only exist while they happen to be
+scrolled into view. What's in place:
+
+- **A text version of the tour** (`#tour-text`) carries the whole narrative as
+  headings and paragraphs, in order, read once. The canvas is `aria-hidden`
+  and the caption scenes are too, so nothing is announced twice. **If you edit
+  the chapter copy in the overlay, edit it here as well** — they are kept in
+  sync by hand.
+- **Skip links** — the page is ~18,000px tall, so the first three tab stops are
+  "skip the film", "skip to the figures" and "skip to contact".
+- **A visible focus ring** on every control. The buttons are custom-styled, so
+  without it a keyboard user has no idea where they are.
+- **Form errors** are announced through a `role="status"` region, fields get
+  `aria-invalid`, and focus moves to the first field that needs fixing.
+- **Reduced motion** — the looping finale holds its first frame instead of
+  playing, button-triggered playback jumps rather than animating, and
+  transitions are cut. Scroll scrubbing still works, because that is the
+  reader's own input rather than something the page does to them.
+- The floor-plan tabs are a proper tablist, with arrow-key navigation.
+- Headings run in order with no skips, every field has a label, and the play
+  buttons and map and plan SVGs all have accessible names.
+
+What has **not** been done: no run through axe or WAVE, and no testing with an
+actual screen reader or by anyone who relies on one. Contrast was checked
+against the dark content plate and passes, but text over the film sits on a
+moving image — the scrim and side wash hold it up, and that is a judgement
+rather than a measurement. Treat this as careful work, not as a conformance
+claim.
+
 ## Before this goes live
 
 - **The enquiry form is not connected.** `FORM_ENDPOINT` at the top of
