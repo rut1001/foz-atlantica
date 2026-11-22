@@ -5,3 +5,9 @@
 
 # editors
 .idea/
+
+# Source video masters. Kept locally, deliberately never committed: the repo
+# is public so the site can be shared, and these are the full-quality
+# originals. The site never loads them — it runs on assets/frames/ — so
+# nothing breaks by their absence. Back them up yourself; git will not.
+*.mp4

@@ -24,8 +24,14 @@ assets/frames/
   c7/…             169 frames  ← 7.mp4
 ```
 
-943 frames, ~54 MB total. The original `.mp4` files are kept at the repo root
-as masters; they are not loaded by the site.
+943 frames, ~54 MB total.
+
+**The source `.mp4` masters are not in this repository.** They are full-quality
+originals, this repo is public so the site can be shared, and the site never
+loads them — it runs entirely on `assets/frames/`. They are listed in
+`.gitignore`, so they sit in the working folder without ever being committed.
+They were purged from the history as well, not merely deleted going forward.
+Keep your own backup of them; git is not holding one for you.
 
 ## How the tour works
 
@@ -95,8 +101,9 @@ again. To get an address that does not depend on your computer being on, run the
 
 ## Regenerating the frames
 
-If the source videos change, re-run (1080p sources at 1440px, 720p sources
-kept at native width):
+This needs the `.mp4` masters present in this folder — see above, they are not
+in the repository, so copy them back in first. Then re-run (1080p sources at
+1440px, 720p sources kept at native width):
 
 ```bash
 for i in 1 2 3 7; do mkdir -p assets/frames/c$i && ffmpeg -i $i.mp4 -vf scale=1440:-2 -q:v 5 assets/frames/c$i/%04d.jpg; done
