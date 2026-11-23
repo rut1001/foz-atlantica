@@ -12,7 +12,7 @@ with a button at each chapter that plays the next clip at its real speed.
 index.html         markup + all copy
 css/site.css       styling
 js/site.js         the film engine
-assets/hero.jpg    poster image (from 1.jpg)
+assets/hero.jpg    unused — nothing references it
 assets/og.jpg      social preview
 assets/frames/
   c1/0001.jpg …    121 frames  ← 1.mp4
@@ -24,7 +24,7 @@ assets/frames/
   c7/…             169 frames  ← 7.mp4
 ```
 
-943 frames, ~54 MB total.
+943 frames, ~133 MB total.
 
 **The source `.mp4` masters are not in this repository.** They are full-quality
 originals, this repo is public so the site can be shared, and the site never
@@ -193,16 +193,25 @@ Settings → Pages; nothing in the project depends on it.
 ## Regenerating the frames
 
 This needs the `.mp4` masters present in this folder — see above, they are not
-in the repository, so copy them back in first. Then re-run (1080p sources at
-1440px, 720p sources kept at native width):
+in the repository, so copy them back in first. No scaling: every chapter is
+extracted at the source's own resolution, which is 1920x1080 for 1, 2, 3 and 7
+and 1280x720 for 4, 5 and 6.
 
 ```bash
-for i in 1 2 3 7; do mkdir -p assets/frames/c$i && ffmpeg -i $i.mp4 -vf scale=1440:-2 -q:v 5 assets/frames/c$i/%04d.jpg; done
+for i in 1 2 3 4 5 6 7; do mkdir -p assets/frames/c$i && ffmpeg -i $i.mp4 -q:v 2 assets/frames/c$i/%04d.jpg; done
 ```
 
-```bash
-for i in 4 5 6; do mkdir -p assets/frames/c$i && ffmpeg -i $i.mp4 -vf scale=1280:-2 -q:v 5 assets/frames/c$i/%04d.jpg; done
-```
+`-q:v 2` is mjpeg's near-lossless end (the scale runs 1 to 31). An earlier
+build used `-q:v 5` and downscaled the 1080p chapters to 1440px, which is
+where the softness came from: the canvas backing store is already 2x the CSS
+size on a retina screen, so a 1440px frame was being enlarged by about 1.8x
+before anything was drawn.
+
+**After re-extracting, bump `FRAME_VERSION` in `js/site.js` and the matching
+`?v=` on the preload link in `index.html`.** Both must agree. `/assets/*` is
+served `immutable` for a year, so without a new query string the re-encode
+never reaches anyone who has already visited, and a mismatched preload fetches
+the opening frame twice.
 
 Then update the `frames` and `dur` values in the `CH` table at the top of
 `js/site.js` to match `ffprobe`'s reported frame count and duration.

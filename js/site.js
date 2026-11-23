@@ -53,8 +53,18 @@
     loaded: 0, started: false, done: false, promise: null
   }));
 
+  /* Bump this whenever the frames are re-extracted.
+     vercel.json serves /assets/* with `immutable, max-age=31536000`, which is
+     right for 943 files that normally never change — but it also means that
+     replacing a frame at the same URL leaves every previous visitor looking
+     at the old one for a year. The query string is part of the cache key, so
+     changing it is what actually delivers a re-encode.
+     v2 = native resolution (1920x1080 / 1280x720), mjpeg -q:v 2. */
+  const FRAME_VERSION = 2;
+
   function frameURL(n, i) {
-    return 'assets/frames/c' + n + '/' + String(i + 1).padStart(4, '0') + '.jpg';
+    return 'assets/frames/c' + n + '/' + String(i + 1).padStart(4, '0')
+         + '.jpg?v=' + FRAME_VERSION;
   }
 
   function loadSeq(n) {
@@ -102,6 +112,16 @@
     canvas.width  = Math.round(cw * dpr);
     canvas.height = Math.round(chh * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    /* The frame is almost never drawn at 1:1. A 1920-wide source covering a
+       1440 CSS-pixel viewport on a 2x screen is resampled to 2880, and on a
+       narrow window it is scaled down instead. The default smoothing is
+       'low', which is a cheap bilinear filter and visibly soft on exactly
+       this kind of footage — long horizon lines, water, glass. Resetting the
+       transform clears this, so it is set here rather than once at startup. */
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+
     lastDrawn = null;
   }
 
