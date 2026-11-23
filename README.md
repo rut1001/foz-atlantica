@@ -99,6 +99,30 @@ machine.** That is normal, and it is why the address goes dead — just start it
 again. To get an address that does not depend on your computer being on, run the
 *Publish to the web* task.
 
+## Where it is published
+
+The site is live at **https://rut1001.github.io/foz-atlantica/**, served by
+GitHub Pages from `main` at the repository root. Pushing to `main` rebuilds it;
+the build takes a minute or two.
+
+The repository is public, which is what makes that address work on a free
+account. Two consequences worth being deliberate about:
+
+- **Everything in the repository is downloadable by anyone**, including all 943
+  frames. That is unavoidable for any public site — a browser cannot display an
+  image without first fetching it. The frames are 1440px JPEGs at quality 5,
+  deliberately not the masters.
+- **`vercel.json` does nothing here.** Pages will not read it, so the response
+  headers it defines — `nosniff`, `Referrer-Policy`, `X-Frame-Options`, HSTS,
+  `Permissions-Policy` and the CSP — are not sent. What still applies is the
+  `<meta http-equiv="Content-Security-Policy">` in `index.html`, which is why
+  that tag exists separately rather than relying on the host. GitHub Pages does
+  enforce HTTPS on its own. If the site ever moves to Vercel, the full header
+  set comes back with it.
+
+`foz-atlantica-archive` is a private repository holding the original history,
+including the `.mp4` masters. It is kept private on purpose; do not publish it.
+
 ## Regenerating the frames
 
 This needs the `.mp4` masters present in this folder — see above, they are not
