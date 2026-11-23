@@ -1,0 +1,250 @@
+/* ============================================================
+   Foz Atlântica — enquiries console
+   ------------------------------------------------------------
+   Deliberately its own stylesheet rather than a reuse of
+   site.css. That file is 600 lines built around a full-bleed
+   canvas film, and none of it applies to a table of names. The
+   design tokens are repeated here so the two still look like
+   one product.
+   ============================================================ */
+
+:root{
+  --ink:      #16130F;
+  --ink-soft: #2A241D;
+  --ink-line: #352E25;
+  --bone:     #FBF8F3;
+  --sand:     #EDE3D6;
+  --sand-dim: #C9BCA9;
+  --brass:    #C6A063;
+  --brass-lo: #9E7C45;
+  --rose:     #C97A6D;
+
+  --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+*{ box-sizing: border-box; }
+
+html{ -webkit-text-size-adjust: 100%; }
+
+body{
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-only{
+  position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+}
+
+.muted{ color: var(--sand-dim); }
+
+/* ── bar ─────────────────────────────────────────────────── */
+
+.bar{
+  display: flex; align-items: center; gap: 16px;
+  padding: 18px clamp(16px, 4vw, 40px);
+  border-bottom: 1px solid var(--ink-line);
+  background: var(--ink-soft);
+  position: sticky; top: 0; z-index: 10;
+}
+.mark{
+  font-family: var(--serif);
+  font-size: 21px; letter-spacing: .5px;
+}
+.bar-title{
+  font-size: 11px; letter-spacing: 2.4px; text-transform: uppercase;
+  color: var(--sand-dim);
+  padding-left: 16px; border-left: 1px solid var(--ink-line);
+}
+.bar button{ margin-left: auto; }
+
+/* ── buttons ─────────────────────────────────────────────── */
+
+button{ font-family: var(--sans); font-size: 13px; cursor: pointer; }
+
+.solid{
+  background: var(--brass); color: var(--ink);
+  border: 1px solid var(--brass);
+  border-radius: 2px; padding: 11px 26px;
+  letter-spacing: 1.4px; text-transform: uppercase; font-weight: 600;
+  transition: background .18s;
+}
+.solid:hover:not(:disabled){ background: var(--brass-lo); border-color: var(--brass-lo); }
+
+.ghost{
+  background: transparent; color: var(--sand);
+  border: 1px solid var(--ink-line);
+  border-radius: 2px; padding: 8px 16px;
+  letter-spacing: 1.2px; text-transform: uppercase; font-size: 11px;
+  transition: border-color .18s, color .18s;
+}
+.ghost:hover:not(:disabled){ border-color: var(--brass); color: var(--brass); }
+.ghost.small{ padding: 6px 12px; font-size: 10px; letter-spacing: 1px; }
+.ghost.danger:hover:not(:disabled){ border-color: var(--rose); color: var(--rose); }
+
+button:disabled{ opacity: .45; cursor: default; }
+
+/* Custom-styled controls need a visible focus ring or a keyboard
+   user has no idea where they are. */
+:focus-visible{
+  outline: 2px solid var(--brass);
+  outline-offset: 2px;
+}
+
+/* ── gate ────────────────────────────────────────────────── */
+
+.gate{
+  max-width: 400px;
+  margin: clamp(60px, 14vh, 140px) auto;
+  padding: 0 24px;
+  text-align: center;
+}
+.gate h1{
+  font-family: var(--serif); font-weight: 300;
+  font-size: clamp(34px, 7vw, 46px); margin: 0 0 10px;
+}
+.gate p{ margin: 0 0 32px; }
+
+.gate form{ display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.gate label{
+  font-size: 11px; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--sand-dim);
+}
+.gate input{
+  background: var(--ink-soft);
+  border: 1px solid var(--ink-line);
+  border-radius: 2px;
+  color: var(--bone);
+  font-family: var(--sans); font-size: 16px;   /* 16px stops iOS zooming in */
+  padding: 13px 14px;
+  width: 100%;
+}
+.gate input:focus{ border-color: var(--brass); outline: none; }
+.gate button{ margin-top: 6px; }
+
+/* ── messages ────────────────────────────────────────────── */
+
+.msg{ min-height: 20px; margin: 16px 0 0; font-size: 13px; }
+.msg.err{ color: var(--rose); }
+.msg.ok { color: var(--brass); }
+
+/* ── panel ───────────────────────────────────────────────── */
+
+.panel{ padding: clamp(20px, 4vw, 40px); }
+
+.toolbar{
+  display: flex; flex-wrap: wrap; gap: 16px 24px;
+  align-items: center; justify-content: space-between;
+  padding-bottom: 18px; border-bottom: 1px solid var(--ink-line);
+}
+.counts strong{ font-size: 22px; font-weight: 500; }
+.counts .sep{ color: var(--ink-line); margin: 0 8px; }
+.tools{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.checkline{
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 12px; color: var(--sand-dim); cursor: pointer;
+}
+.checkline input{ accent-color: var(--brass); }
+
+.empty{ padding: 70px 0; text-align: center; }
+.empty p{ margin: 0 0 6px; }
+
+/* ── table ───────────────────────────────────────────────── */
+
+.tablewrap{ overflow-x: auto; margin-top: 8px; }
+
+table{ width: 100%; border-collapse: collapse; min-width: 820px; }
+
+th{
+  text-align: left; font-weight: 500;
+  font-size: 10px; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--sand-dim);
+  padding: 16px 14px 10px; border-bottom: 1px solid var(--ink-line);
+  white-space: nowrap;
+}
+td{
+  padding: 16px 14px;
+  border-bottom: 1px solid var(--ink-line);
+  vertical-align: top;
+}
+
+/* Handled rows recede, but stay legible — .45 dimmed the text far enough
+   below the background contrast that reading a dealt-with enquiry became
+   a squint. */
+tr.done td{ opacity: .62; }
+
+.when   { white-space: nowrap; font-size: 13px; color: var(--sand-dim); }
+.who    { font-weight: 500; }
+.contact a{ color: var(--brass); text-decoration: none; word-break: break-word; }
+.contact a:hover{ text-decoration: underline; }
+.contact a.muted{ color: var(--sand-dim); font-size: 13px; }
+.interest{ font-size: 13px; }
+.message{
+  max-width: 340px; font-size: 13px;
+  white-space: pre-wrap;        /* keep the visitor's own line breaks */
+  overflow-wrap: anywhere;      /* and never let one long word widen the table */
+}
+.actions{ white-space: nowrap; text-align: right; }
+.actions button + button{ margin-left: 6px; }
+
+/* ── narrow screens ──────────────────────────────────────────
+   A six-column table on a phone means scrolling sideways to read
+   one enquiry, which is exactly the thing you came to the page to
+   do. Below 760px each row becomes a stacked card instead, with
+   the column heading carried in front of each value by data-label.
+   The markup stays a real table, so it is still announced as one
+   and the header cells still name the columns. */
+
+@media (max-width: 760px){
+  .toolbar{ flex-direction: column; align-items: flex-start; }
+
+  .tablewrap{ overflow-x: visible; }
+  table{ min-width: 0; }
+
+  thead{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+
+  tr{
+    display: block;
+    border: 1px solid var(--ink-line);
+    border-radius: 3px;
+    padding: 6px 2px;
+    margin-bottom: 14px;
+    background: var(--ink-soft);
+  }
+
+  td{
+    display: grid;
+    grid-template-columns: 92px 1fr;
+    gap: 12px;
+    align-items: start;
+    border-bottom: none;
+    padding: 8px 14px;
+  }
+  td + td{ border-top: 1px solid rgba(255,255,255,.04); }
+
+  td[data-label]::before{
+    content: attr(data-label);
+    font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase;
+    color: var(--sand-dim);
+    padding-top: 3px;
+  }
+  /* The actions cell has an empty label, so it spans instead. */
+  td[data-label=""]{ grid-template-columns: 1fr; }
+  td[data-label=""]::before{ content: none; }
+
+  .message{ max-width: none; }
+  .actions{ text-align: left; padding-top: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; }
+}

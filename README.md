@@ -99,6 +99,67 @@ machine.** That is normal, and it is why the address goes dead — just start it
 again. To get an address that does not depend on your computer being on, run the
 *Publish to the web* task.
 
+## Enquiries and the admin page
+
+Submissions from the form go to a Supabase project (`foz-atlantica`,
+eu-central-1) and are read back at **`/admin/`**, which nothing on the site
+links to.
+
+### How it is secured
+
+The site is static. There is no server of ours between a visitor and the
+database, so the Supabase publishable key sits in `js/backend.js` in plain
+sight — that is the intended shape, not an oversight. Every real control is in
+the database:
+
+| | |
+|---|---|
+| `enquiries` | RLS on |
+| INSERT | allowed to `anon`, with `handled` forced to false |
+| SELECT | allowed only where `auth.uid()` equals the one admin user id |
+| UPDATE / DELETE | same single user id |
+| Column limits | CHECK constraints on every text column, and an email shape |
+
+The SELECT policy names a **user id**, not the `authenticated` role. That
+distinction is the whole security model: GoTrue's signup endpoint accepts the
+publishable key, so a stranger can mint themselves an account and arrive
+holding `authenticated`. A policy written `to authenticated` would hand them
+every name, email and phone number in the table.
+
+This was tested rather than assumed. With a second account signed in and
+genuinely authenticated, `SELECT` returned `[]`, and a blanket `DELETE` and a
+blanket `UPDATE` both reported success while changing nothing — PostgREST
+answers 204/200 when RLS has simply hidden every row from them.
+
+### The password
+
+`/admin/` is unlisted, not secret: it carries `noindex` and nothing links to
+it, but anyone who types the address gets the login box. That is fine, because
+the password is not what hides the page — it is what Supabase checks before
+issuing a token, and no token means no rows.
+
+The password is **not in this repository** and must never be put here. A
+password written into client-side JavaScript is readable by everyone,
+doubly so in a public repo. To change it, use the Supabase dashboard:
+Authentication → Users → `admin@fozatlantica.com` → Reset password.
+
+That email address is an identifier only. No mail is ever sent to it, and the
+domain is fictional like the rest of the project.
+
+### Known gaps
+
+- **Anyone may insert.** The form endpoint is open by design, so the table can
+  be flooded. The CHECK constraints cap the size of each row; there is no rate
+  limit. If that becomes a problem the fix is an edge function with a captcha
+  or a per-IP limit, not a change to these policies.
+- **Leaked-password protection is off** in the project's auth settings.
+  Turning it on (Authentication → Policies) makes Supabase refuse passwords
+  known to HaveIBeenPwned.
+- **No privacy notice and no consent checkbox.** The form now stores real
+  personal data. Before any real launch, say who holds it, why, and for how
+  long, and ask the visitor to agree.
+- **No backup.** Enquiries exist only in Supabase. Export the CSV periodically.
+
 ## Where it is published
 
 The site is live at **https://rut1001.github.io/foz-atlantica/**, served by

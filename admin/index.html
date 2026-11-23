@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enquiries — Foz Atlântica</title>
+
+<!-- Unlisted, not secret. Nothing on the public site links here and search
+     engines are asked to stay away, but anyone who types the address still
+     reaches this page. That is fine: what they get is the password box. The
+     enquiries themselves are guarded by row-level security in the database,
+     which refuses to hand a single row to anyone who is not the one admin
+     account — not to a visitor, and not to a stranger holding the public key
+     out of this page's source. -->
+<meta name="robots" content="noindex, nofollow, noarchive">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iwqbszwucnhsfccfuzyr.supabase.co; form-action 'none'; base-uri 'self'; object-src 'none'">
+
+<link rel="stylesheet" href="../css/fonts.css?v=4">
+<link rel="stylesheet" href="../css/admin.css?v=4">
+</head>
+<body>
+
+<header class="bar">
+  <span class="mark">Foz Atlântica</span>
+  <span class="bar-title">Enquiries</span>
+  <button id="signout" class="ghost" hidden>Sign out</button>
+</header>
+
+<main id="main">
+
+  <!-- ── Locked ───────────────────────────────────────────── -->
+  <section class="gate" id="gate">
+    <h1>Enquiries</h1>
+    <p class="muted">This page lists everyone who has used the enquiry form.</p>
+
+    <form id="loginForm" novalidate>
+      <label for="pw">Password</label>
+      <input id="pw" type="password" autocomplete="current-password"
+             autocapitalize="off" spellcheck="false" required>
+      <button type="submit" class="solid" id="loginBtn">Unlock</button>
+    </form>
+
+    <p class="msg" id="loginMsg" role="status" aria-live="polite"></p>
+  </section>
+
+  <!-- ── Unlocked ─────────────────────────────────────────── -->
+  <section class="panel" id="panel" hidden>
+    <div class="toolbar">
+      <div class="counts">
+        <strong id="countTotal">0</strong> <span class="muted">total</span>
+        <span class="sep">·</span>
+        <strong id="countNew">0</strong> <span class="muted">unhandled</span>
+      </div>
+      <div class="tools">
+        <label class="checkline"><input type="checkbox" id="hideHandled"> Hide handled</label>
+        <button class="ghost" id="refresh">Refresh</button>
+        <button class="ghost" id="exportCsv">Export CSV</button>
+      </div>
+    </div>
+
+    <p class="msg" id="panelMsg" role="status" aria-live="polite"></p>
+
+    <div class="empty" id="empty" hidden>
+      <p>No enquiries yet.</p>
+      <p class="muted">Submissions from the form on the site appear here.</p>
+    </div>
+
+    <div class="tablewrap" id="tablewrap" hidden>
+      <table id="table">
+        <caption class="sr-only">Enquiries submitted through the site, newest first</caption>
+        <thead>
+          <tr>
+            <th scope="col">Received</th>
+            <th scope="col">Name</th>
+            <th scope="col">Contact</th>
+            <th scope="col">Interest</th>
+            <th scope="col">Message</th>
+            <th scope="col"><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script src="../js/backend.js?v=4"></script>
+<script src="admin.js?v=4"></script>
+</body>
+</html>

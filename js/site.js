@@ -9,9 +9,9 @@
 (function () {
   'use strict';
 
-  /* ── Where enquiry submissions should POST. Leave null for a
-        demo build; set to a Formspree / API URL to go live.   ── */
-  const FORM_ENDPOINT = null;
+  /* ── Enquiries go to Supabase. The bridge is js/backend.js,
+        which must be loaded before this file. If it is missing
+        the form says so rather than pretending to have sent.  ── */
 
   /* ── Chapter table ───────────────────────────────────────── */
   const CH = [
@@ -486,46 +486,55 @@
       return;
     }
     const payload = Object.fromEntries(new FormData(form).entries());
-    payload.submittedAt = new Date().toISOString();
+    const firstName = payload.name.trim().split(/\s+/)[0];
 
-    if (FORM_ENDPOINT) {
-      note.className = 'form-note'; note.textContent = 'Sending…';
-      try {
-        const r = await fetch(FORM_ENDPOINT, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (!r.ok) throw new Error(r.status);
-      } catch (err) {
-        note.className = 'form-note err';
-        note.textContent = 'That didn’t send. Please email us directly and we’ll pick it up.';
-        return;
-      }
-      form.classList.add('sent');
-      note.className = 'form-note ok';
-      note.textContent = 'Thank you, ' + payload.name.trim().split(' ')[0] +
-        '. The investment deck is on its way to ' + payload.email.trim() + '.';
-    } else {
-      /* Demo build: nothing is transmitted, and nothing is kept. An earlier
-         version logged the whole submission to localStorage, which left a
-         real person's name, email and phone sitting in the browser forever
-         for no benefit. */
-      console.warn('[Foz Atlântica] FORM_ENDPOINT is not configured — this enquiry went nowhere.');
-      form.classList.add('sent');
-      note.className = 'form-note ok';
-      /* Built as text nodes rather than innerHTML: the name is user input,
-         and escaping it by stripping characters is the wrong shape of fix. */
-      note.textContent = '';
-      note.appendChild(document.createTextNode(
-        'Thank you, ' + payload.name.trim().split(' ')[0] + '. Your request has been recorded.'
-      ));
-      note.appendChild(document.createElement('br'));
-      const small = document.createElement('i');
-      small.className = 'form-note-sub';
-      small.textContent = 'Demo build — no delivery endpoint is configured yet '
-        + '(set FORM_ENDPOINT in js/site.js).';
-      note.appendChild(small);
+    if (!window.FA_BACKEND) {
+      note.className = 'form-note err';
+      note.textContent = 'The enquiry service is not loaded. Please try again later.';
+      console.error('[Foz Atlântica] js/backend.js did not load — nothing was sent.');
+      return;
     }
+
+    const submitBtn = form.querySelector('button[type="submit"]');
+    note.className = 'form-note';
+    note.textContent = 'Sending…';
+    if (submitBtn) submitBtn.disabled = true;   // no double submissions
+
+    try {
+      /* Trimmed, and empty optional fields are sent as null rather than ''
+         so the table holds an absent answer as absent. The column CHECK
+         constraints are the real limit; these are just tidy values. */
+      await window.FA_BACKEND.submitEnquiry({
+        name:      payload.name.trim(),
+        email:     payload.email.trim(),
+        phone:     (payload.phone   || '').trim() || null,
+        intent:    (payload.intent  || '').trim() || null,
+        budget:    (payload.budget  || '').trim() || null,
+        message:   (payload.message || '').trim() || null,
+        page_path: location.pathname
+      });
+    } catch (err) {
+      if (submitBtn) submitBtn.disabled = false;
+      note.className = 'form-note err';
+      note.textContent = 'That didn’t send. Please check your connection and try again.';
+      console.error('[Foz Atlântica] enquiry failed:', err);
+      return;
+    }
+
+    form.classList.add('sent');
+    note.className = 'form-note ok';
+    /* Built as text nodes rather than innerHTML: the name is user input,
+       and escaping it by stripping characters is the wrong shape of fix. */
+    note.textContent = '';
+    note.appendChild(document.createTextNode(
+      'Thank you, ' + firstName + '. Your enquiry has been received.'
+    ));
+    note.appendChild(document.createElement('br'));
+    const small = document.createElement('i');
+    small.className = 'form-note-sub';
+    small.textContent = 'Demonstration site — this is a real record in a real '
+      + 'database, but Foz Atlântica is not a real development and no brochure exists.';
+    note.appendChild(small);
   });
 
   /* ── Boot ────────────────────────────────────────────────── */

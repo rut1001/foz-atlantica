@@ -19,15 +19,18 @@ PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8123
 CODE = ('.html', '.css', '.js', '.json', '.map')
 
 
-# The form never posts anywhere today. If FORM_ENDPOINT in js/site.js is set
-# to an external URL, add that origin to connect-src or the fetch is blocked.
+# connect-src names the Supabase project the enquiry form writes to and the
+# admin console reads from. It is the single external origin this site talks
+# to; everything else stays 'self'. If the project ever changes, this string,
+# the one in vercel.json and the <meta> in index.html and admin/index.html all
+# have to change together or the requests are blocked.
 CSP = (
     "default-src 'self'; "
     "script-src 'self'; "
     "style-src 'self'; "
     "font-src 'self'; "
     "img-src 'self' data:; "
-    "connect-src 'self'; "
+    "connect-src 'self' https://iwqbszwucnhsfccfuzyr.supabase.co; "
     "form-action 'none'; "
     "base-uri 'self'; "
     "object-src 'none'; "

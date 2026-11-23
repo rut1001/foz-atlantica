@@ -9,10 +9,10 @@
 <meta property="og:description" content="Twenty-eight oceanfront residences in Foz do Douro, Porto. One to four bedrooms, west-facing over the Atlantic.">
 <meta property="og:image" content="assets/og.jpg">
 <meta name="theme-color" content="#16130F">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self'; form-action 'none'; base-uri 'self'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://iwqbszwucnhsfccfuzyr.supabase.co; form-action 'none'; base-uri 'self'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
-<link rel="stylesheet" href="css/fonts.css?v=3">
-<link rel="stylesheet" href="css/site.css?v=3">
+<link rel="stylesheet" href="css/fonts.css?v=4">
+<link rel="stylesheet" href="css/site.css?v=4">
 <link rel="preload" as="image" href="assets/frames/c1/0001.jpg">
 </head>
 <body>
@@ -640,7 +640,10 @@
       · Verify the specification claims: 9.2 m of glazing, Estremoz marble,
         A2 energy target, 12–140 m² terrace range, one parking bay per unit
       · Verify the distances: 15 min to the city centre, 30 min to the airport
-      · FORM_ENDPOINT in js/site.js is still null — the form delivers nowhere
+      · The enquiry form now writes to Supabase and the submissions are read
+        at /admin/. Before a real launch: decide who may hold that data and
+        for how long, say so in a privacy notice, and add a consent checkbox
+        to the form — none of that is in place yet.
       ═══════════════════════════════════════════════════════════════
     -->
 
@@ -680,14 +683,16 @@
           demonstrate a scroll-driven presentation format. The project, the company, the
           address, the licence number and every price, area, availability figure and date
           shown here are invented. All imagery is computer-generated. Nothing on this page
-          is an offer or an invitation to invest, and the enquiry form does not deliver to
-          anyone.</p>
+          is an offer or an invitation to invest. The enquiry form does work — it stores
+          what you send in a private database so the format can be demonstrated
+          end to end — so please do not submit details you would not want kept.</p>
       </div>
     </aside>
 
   </div><!-- /fin-body -->
 </main>
 
-<script src="js/site.js?v=3"></script>
+<script src="js/backend.js?v=4"></script>
+<script src="js/site.js?v=4"></script>
 </body>
 </html>
