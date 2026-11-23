@@ -47,6 +47,19 @@ Keep your own backup of them; git is not holding one for you.
   exactly the source clip's duration — clicking plays the video at 1×, and the
   tween lands on the next chapter's gate. Any wheel, touch or key input cancels
   the tween and hands control straight back to the user.
+- **The sea never freezes.** A scroll-scrubbed film becomes a photograph the
+  moment you stop scrolling, which on this footage reads as broken rather than
+  calm. After about a fifth of a second of stillness the drawn frame starts
+  travelling ten frames out and back, on a triangle wave, easing in over
+  700ms. Ten frames is five twelfths of a second of dolly — imperceptible as
+  camera movement, and plenty for a wave. It is a triangle rather than a sine
+  because a sine's velocity falls to zero at each turning point, stalling the
+  water for a beat at both ends of every cycle; running the water briefly
+  backwards is much less noticeable than stopping it. The offset applies to
+  the drawn frame only — `prog` stays tied to scroll position, so gates,
+  captions, the rail and the scrim are not nudged by it. Constants are
+  `IDLE_WAIT`, `IDLE_SPAN`, `IDLE_PERIOD` and `IDLE_RAMP` at the top of the
+  render section. Disabled entirely under `prefers-reduced-motion`.
 - Frames load progressively, chapter by chapter, in narrative order. The hero
   button stays disabled with a progress meter until chapter 1 is fully decoded.
   While a later chapter is still loading, scrubbing falls back to the nearest
