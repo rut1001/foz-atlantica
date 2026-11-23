@@ -331,60 +331,12 @@
     });
   });
 
-  /* ── Idle sway ───────────────────────────────────────────────
-     A scroll-scrubbed film has one unfortunate property: stop scrolling
-     and the picture becomes a photograph. On footage that is mostly
-     ocean, a frozen sea reads as broken rather than calm. So while the
-     page is at rest the frame index travels over a short window and
-     comes back. The camera creeps and returns; the water keeps running.
-
-     The window is small on purpose. Every one of these clips is a moving
-     camera, so there is no way to move the water without also moving the
-     shot — ten frames is five twelfths of a second of dolly, which is
-     imperceptible as camera travel and plenty for a wave.
-
-     A triangle wave rather than a sine. A sine's velocity falls to zero
-     at each turning point, so the sea would stall for a beat at both
-     ends of every cycle, which is the exact thing this exists to
-     prevent. Running the water briefly backwards is far less noticeable
-     than stopping it. */
-  const IDLE_WAIT   = 220;    // ms of stillness before the sway starts
-  const IDLE_SPAN   = 10;     // frames travelled from the resting frame
-  const IDLE_PERIOD = 1600;   // ms for one full out-and-back
-  const IDLE_RAMP   = 700;    // ms to fade it in, so it never snaps into motion
-
-  let stillSince = performance.now(), lastY = -1;
-
-  function idleOffset(now, base, maxIndex) {
-    /* An unprompted, perpetual motion is precisely what this preference
-       asks us not to do — the same reason the finale loop is held. */
-    if (reduceMotion) return 0;
-
-    const t = now - stillSince - IDLE_WAIT;
-    if (t <= 0) return 0;
-
-    const phase = (t % IDLE_PERIOD) / IDLE_PERIOD;
-    const tri   = 1 - Math.abs(2 * phase - 1);        // 0 → 1 → 0, constant speed
-    const ramp  = Math.min(1, t / IDLE_RAMP);
-
-    /* Direction is chosen from the headroom once per resting position,
-       not per sample. Deciding it per sample would flip mid-cycle near a
-       chapter end and jump the picture. */
-    const room = maxIndex - base;
-    const dir  = room >= IDLE_SPAN ? 1 : -1;
-    const span = Math.min(IDLE_SPAN, dir === 1 ? room : base);
-
-    return dir * Math.round(tri * span * ramp);
-  }
-
   /* ── Render loop ─────────────────────────────────────────── */
   let lastScrim = -1, lastRail = -1, lastSide = -1, lastSideFlip = null, lastRailOp = -1;
 
   function render() {
     const y = window.scrollY;
     const vh = window.innerHeight;
-    const now = performance.now();
-    if (y !== lastY) { lastY = y; stillSince = now; }
     /* 2px bias: scrollY and the measured range edges are both fractional, so a
        play-tween that lands exactly on a chapter boundary would otherwise read
        as "still 99.9% through the previous chapter" and skip the next gate. */
@@ -405,20 +357,13 @@
       prog = Math.max(0, Math.min(1, fp));
     } else if (ys < ranges[0].start) {
       active = 1; prog = 0; preTour = true;
-      /* The hero holds on frame 0 behind the title, which is the longest
-         anyone looks at a single frame on the whole page. */
-      drawFrame(1, idleOffset(now, 0, CH[0].frames - 1));
+      drawFrame(1, 0);
     } else {
       for (let i = 0; i < ranges.length; i++) {
         if (ys < ranges[i].end || i === ranges.length - 1) {
           active = i + 1;
           prog = Math.max(0, Math.min(1, (ys - ranges[i].start) / (ranges[i].end - ranges[i].start)));
-          const last = CH[i].frames - 1;
-          const base = Math.min(last, Math.round(prog * last));
-          /* The sway is added to the drawn frame only. `prog` stays tied to
-             scroll position, so the gates, captions, rail and scrim are not
-             nudged about by it. */
-          drawFrame(active, base + idleOffset(now, base, last));
+          drawFrame(active, Math.min(CH[i].frames - 1, Math.round(prog * (CH[i].frames - 1))));
           break;
         }
       }
