@@ -162,27 +162,33 @@ domain is fictional like the rest of the project.
 
 ## Where it is published
 
-The site is live at **https://rut1001.github.io/foz-atlantica/**, served by
-GitHub Pages from `main` at the repository root. Pushing to `main` rebuilds it;
-the build takes a minute or two.
+The site is deployed twice, from the same `main` branch, and a push updates
+both:
 
-The repository is public, which is what makes that address work on a free
-account. Two consequences worth being deliberate about:
+| | |
+|---|---|
+| **Vercel** (primary) | https://foz-atlantica.vercel.app |
+| GitHub Pages | https://rut1001.github.io/foz-atlantica/ |
 
-- **Everything in the repository is downloadable by anyone**, including all 943
-  frames. That is unavoidable for any public site — a browser cannot display an
-  image without first fetching it. The frames are 1440px JPEGs at quality 5,
-  deliberately not the masters.
-- **`vercel.json` does nothing here.** Pages will not read it, so the response
-  headers it defines — `nosniff`, `Referrer-Policy`, `X-Frame-Options`, HSTS,
-  `Permissions-Policy` and the CSP — are not sent. What still applies is the
-  `<meta http-equiv="Content-Security-Policy">` in `index.html`, which is why
-  that tag exists separately rather than relying on the host. GitHub Pages does
-  enforce HTTPS on its own. If the site ever moves to Vercel, the full header
-  set comes back with it.
+Vercel is the one to hand out. The difference is not cosmetic:
 
-`foz-atlantica-archive` is a private repository holding the original history,
-including the `.mp4` masters. It is kept private on purpose; do not publish it.
+- **`vercel.json` is only read by Vercel.** On Pages it is inert, so the CSP
+  header, `nosniff`, `X-Frame-Options`, `Referrer-Policy`, HSTS and
+  `Permissions-Policy` are simply not sent there. The `<meta>` CSP in the two
+  HTML files is the only protection that survives on Pages, which is why it
+  exists separately rather than relying on the host.
+- **Pages caches HTML for ten minutes** (`max-age=600`). That is not a
+  theoretical problem: a deploy went out, the browser kept serving the
+  previous `index.html`, and a form submission silently went nowhere because
+  the old build had no backend wired in. Vercel sends
+  `max-age=0, must-revalidate` for HTML, so a deploy is live on the next
+  ordinary refresh, while `/assets/*` still gets a year of `immutable`.
+
+`page_path` on each enquiry records which deployment it came from — `/` from
+Vercel, `/foz-atlantica/` from Pages — so it is easy to tell them apart.
+
+Keeping both is harmless. To retire Pages, turn it off in the repository's
+Settings → Pages; nothing in the project depends on it.
 
 ## Regenerating the frames
 
