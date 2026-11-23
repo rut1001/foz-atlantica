@@ -146,6 +146,69 @@ Authentication → Users → `admin@fozatlantica.com` → Reset password.
 That email address is an identifier only. No mail is ever sent to it, and the
 domain is fictional like the rest of the project.
 
+### Email notification on a new lead
+
+A new row in `enquiries` sends an email. The chain is:
+
+```
+form → enquiries (INSERT) → trigger → pg_net → Edge Function → Resend → inbox
+```
+
+`supabase/functions/notify-lead/index.ts` and `supabase/sql/notifications.sql`
+hold both ends of it.
+
+**Why the database sends it, not the page.** The email fires on the row
+actually being written, so a notification can never announce a lead that was
+not stored, and there is no endpoint the site can be made to call in a loop to
+flood the inbox. It also means the notification works the same from any host
+the site is served on.
+
+**The trigger cannot cost you a lead.** It runs AFTER INSERT, pg_net queues
+rather than blocks, and the whole body is wrapped in an exception handler that
+warns and returns rather than raising. If it raised, the INSERT would roll
+back and the enquiry would be lost to spare an email.
+
+**No secrets anywhere in this repository.** Three values live in Supabase
+Vault — the Resend key, the recipient address and a 32-byte shared secret. The
+recipient is in Vault for the same reason as the key: this repository is
+public, and hardcoding it would publish the owner's inbox. `public.get_secret`
+is the only door into the vault and is executable by `service_role` alone;
+verified that both `anon` and a signed-in admin get `permission denied`.
+
+**The function is open to the internet and that is fine.** `verify_jwt` is off,
+because the caller is Postgres and this project's service role key is not
+available to embed in a trigger. It authenticates on the shared secret
+instead, compared in constant time. Verified that a request with no secret and
+a request with a guessed one both get 403 before any work happens.
+
+Everything the visitor typed is escaped before it goes into the email —
+checked with `<img src=x onerror=...>` in the name and `<script>` in the
+message; both arrived as text.
+
+#### Two limits worth knowing
+
+**No verified domain.** Resend therefore allows exactly one sender,
+`onboarding@resend.dev`, and will only deliver to the Resend account owner's
+own address. That is the right behaviour for a lead alert and the wrong
+behaviour for anything else — autoresponders to the visitor, or alerts to a
+colleague, both need a verified domain first. Add one in Resend, then change
+`FROM` in the function and `LEAD_NOTIFY_TO` in Vault.
+
+**Deliverability is `onboarding@resend.dev`'s, not yours.** Fine for a demo.
+For anything real, a verified domain with SPF, DKIM and DMARC is what keeps
+these out of spam.
+
+#### Checking on it
+
+```sql
+select status_code, left(content, 200), error_msg, created
+  from net._http_response order by created desc limit 5;
+```
+
+200 with `{"ok":true}` means Resend accepted it; 403 means the shared secret
+does not match; an empty table right after an insert means nothing was
+queued — look for the trigger's warning in the Postgres logs.
+
 ### Known gaps
 
 - **Anyone may insert.** The form endpoint is open by design, so the table can
@@ -158,7 +221,9 @@ domain is fictional like the rest of the project.
 - **No privacy notice and no consent checkbox.** The form now stores real
   personal data. Before any real launch, say who holds it, why, and for how
   long, and ask the visitor to agree.
-- **No backup.** Enquiries exist only in Supabase. Export the CSV periodically.
+- **No backup.** Enquiries exist only in Supabase. The notification email is
+  a second copy of each lead in practice, but it is not an export — take the
+  CSV from /admin/ periodically.
 
 ## Where it is published
 
