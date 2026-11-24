@@ -281,6 +281,49 @@ the opening frame twice.
 Then update the `frames` and `dur` values in the `CH` table at the top of
 `js/site.js` to match `ffprobe`'s reported frame count and duration.
 
+## Colour
+
+The palette is three colours — two bases and an emphasis — and they are in the
+stylesheets exactly as supplied:
+
+| | | |
+|---|---|---|
+| `--clay`     | `#693822` | base, dark |
+| `--sand-dim` | `#C48B67` | base, light |
+| `--flame`    | `#FE4D03` | emphasis |
+
+Everything else is derived from those three hues. A three-colour brand palette
+is not a UI system, and these three cannot carry one on their own: measured
+against each other, light base on dark base is 3.31:1 and emphasis on dark
+base is 2.87:1, so body text and links would both have failed WCAG AA.
+
+The fix was the background, not the brand colours. Taking the page down to
+`#21110B` — the same hue as `--clay`, deepened — gives the two supplied
+colours room: `#C48B67` reads at 6.29:1 and `#FE4D03` at 5.46:1, both
+comfortably past 4.5:1. Nothing you chose was altered.
+
+The derived steps are `--ink`, `--ink-soft` and `--ink-line` for surfaces,
+`--edge` for borders that carry meaning (3:1 against both surfaces),
+`--bone` and `--sand` for text, `--flame-lo` for hover, `--on-flame` for text
+on an orange fill, and `--alert` for errors. Two of them exist for a specific
+reason worth not undoing:
+
+- **`--flame-lo` is lighter than you would expect a hover state to be.**
+  Darkening a flame-filled button past `#E24301` drops the dark label on it
+  below 4.5:1.
+- **`--alert` is separated from `--flame` by lightness**, so an error message
+  never reads as the same colour as a call to action.
+
+The notification email keeps the same hues but not the same values. It is a
+light email, and on white `#FE4D03` reaches only 3.35:1 — so the eyebrow and
+the row labels are taken down their own hues to `#D84001` and `#B3603A`.
+
+Checked by compositing every text colour over its real backdrop in the live
+page, alpha included, rather than reading the declared values: 292 elements on
+the site and 33 on the admin page, no failures. Eight translucent text rules
+that were below the line on the new background were raised to `.56`; the map,
+the floor plans, the chapter rail and the email were all brought over too.
+
 ## Accessibility
 
 The hard part of a site like this is that the content is a canvas: a screen

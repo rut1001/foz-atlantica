@@ -9,15 +9,22 @@
    ============================================================ */
 
 :root{
-  --ink:      #16130F;
-  --ink-soft: #2A241D;
-  --ink-line: #352E25;
-  --bone:     #FBF8F3;
-  --sand:     #EDE3D6;
-  --sand-dim: #C9BCA9;
-  --brass:    #C6A063;
-  --brass-lo: #9E7C45;
-  --rose:     #C97A6D;
+  --ink:       #21110B;   /* page            — your dark base, deepened so text has room */
+  --ink-soft:  #341C11;   /* content plates  */
+  --ink-line:  #532C1B;   /* decorative hairlines */
+  --edge:      #A35735;   /* functional borders — 3:1 on both surfaces above */
+  --clay:      #693822;   /* YOUR dark base, unchanged — fills and rules */
+
+  --bone:      #F6E4D8;   /* body text       */
+  --sand:      #DFBBA0;   /* headings        */
+  --sand-dim:  #C48B67;   /* YOUR light base, unchanged — secondary labels */
+
+  --flame:     #FE4D03;   /* YOUR emphasis, unchanged */
+  --flame-lo:  #E24301;   /* hover on a flame fill — kept light enough that
+                             dark text on it still clears 4.5:1 */
+  --on-flame:  #1A0A03;   /* text on a flame fill */
+  --alert:     #FF9478;   /* errors — separated from flame by lightness so the
+                             two never read as the same colour */
 
   --serif: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
   --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
@@ -69,13 +76,13 @@ body{
 button{ font-family: var(--sans); font-size: 13px; cursor: pointer; }
 
 .solid{
-  background: var(--brass); color: var(--ink);
-  border: 1px solid var(--brass);
+  background: var(--flame); color: var(--ink);
+  border: 1px solid var(--flame);
   border-radius: 2px; padding: 11px 26px;
   letter-spacing: 1.4px; text-transform: uppercase; font-weight: 600;
   transition: background .18s;
 }
-.solid:hover:not(:disabled){ background: var(--brass-lo); border-color: var(--brass-lo); }
+.solid:hover:not(:disabled){ background: var(--flame-lo); border-color: var(--flame-lo); }
 
 .ghost{
   background: transparent; color: var(--sand);
@@ -84,16 +91,16 @@ button{ font-family: var(--sans); font-size: 13px; cursor: pointer; }
   letter-spacing: 1.2px; text-transform: uppercase; font-size: 11px;
   transition: border-color .18s, color .18s;
 }
-.ghost:hover:not(:disabled){ border-color: var(--brass); color: var(--brass); }
+.ghost:hover:not(:disabled){ border-color: var(--flame); color: var(--flame); }
 .ghost.small{ padding: 6px 12px; font-size: 10px; letter-spacing: 1px; }
-.ghost.danger:hover:not(:disabled){ border-color: var(--rose); color: var(--rose); }
+.ghost.danger:hover:not(:disabled){ border-color: var(--alert); color: var(--alert); }
 
 button:disabled{ opacity: .45; cursor: default; }
 
 /* Custom-styled controls need a visible focus ring or a keyboard
    user has no idea where they are. */
 :focus-visible{
-  outline: 2px solid var(--brass);
+  outline: 2px solid var(--flame);
   outline-offset: 2px;
 }
 
@@ -125,14 +132,14 @@ button:disabled{ opacity: .45; cursor: default; }
   padding: 13px 14px;
   width: 100%;
 }
-.gate input:focus{ border-color: var(--brass); outline: none; }
+.gate input:focus{ border-color: var(--flame); outline: none; }
 .gate button{ margin-top: 6px; }
 
 /* ── messages ────────────────────────────────────────────── */
 
 .msg{ min-height: 20px; margin: 16px 0 0; font-size: 13px; }
-.msg.err{ color: var(--rose); }
-.msg.ok { color: var(--brass); }
+.msg.err{ color: var(--alert); }
+.msg.ok { color: var(--flame); }
 
 /* ── panel ───────────────────────────────────────────────── */
 
@@ -144,13 +151,13 @@ button:disabled{ opacity: .45; cursor: default; }
   padding-bottom: 18px; border-bottom: 1px solid var(--ink-line);
 }
 .counts strong{ font-size: 22px; font-weight: 500; }
-.counts .sep{ color: var(--ink-line); margin: 0 8px; }
+.counts .sep{ color: var(--edge); margin: 0 8px; }
 .tools{ display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
 .checkline{
   display: inline-flex; align-items: center; gap: 7px;
   font-size: 12px; color: var(--sand-dim); cursor: pointer;
 }
-.checkline input{ accent-color: var(--brass); }
+.checkline input{ accent-color: var(--flame); }
 
 .empty{ padding: 70px 0; text-align: center; }
 .empty p{ margin: 0 0 6px; }
@@ -181,7 +188,7 @@ tr.done td{ opacity: .62; }
 
 .when   { white-space: nowrap; font-size: 13px; color: var(--sand-dim); }
 .who    { font-weight: 500; }
-.contact a{ color: var(--brass); text-decoration: none; word-break: break-word; }
+.contact a{ color: var(--flame); text-decoration: none; word-break: break-word; }
 .contact a:hover{ text-decoration: underline; }
 .contact a.muted{ color: var(--sand-dim); font-size: 13px; }
 .interest{ font-size: 13px; }
