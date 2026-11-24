@@ -314,6 +314,19 @@ reason worth not undoing:
 - **`--alert` is separated from `--flame` by lightness**, so an error message
   never reads as the same colour as a call to action.
 
+**Hover is the emphasis colour, everywhere.** Outlined buttons fill with
+`--flame` and switch their label to `--on-flame`; the play button's fill
+slides up in `--flame`; the quiet underlined links, the chapter-rail dots and
+the floor-plan tabs all take `--flame`. Solid buttons were already orange, so
+they darken to `--flame-lo` instead.
+
+One ordering detail holds this together: `.plan-tab:hover` and
+`.plan-tab[aria-selected="true"]` have identical specificity, so the selected
+tab keeps its dark label only because the selected rule is written after the
+hover rule. Moving either one above the other would put orange text on an
+orange tab. Verified by hovering it for real, not by reading the cascade:
+5.77:1 while hovered.
+
 The notification email keeps the same hues but not the same values. It is a
 light email, and on white `#FE4D03` reaches only 3.35:1 — so the eyebrow and
 the row labels are taken down their own hues to `#D84001` and `#B3603A`.

@@ -143,7 +143,7 @@ button,input,select,textarea{ font:inherit; color:inherit; }
   padding:11px 20px; border:1px solid rgba(246,228,216,.3); border-radius:999px;
   white-space:nowrap; transition:all .3s var(--ease);
 }
-.btn-ghost:hover{ background:var(--bone); color:var(--ink); border-color:var(--bone); }
+.btn-ghost:hover{ background:var(--flame); color:var(--on-flame); border-color:var(--flame); }
 
 .scrollbar-line{
   position:absolute; left:0; right:0; bottom:0; height:1px;
@@ -176,7 +176,7 @@ button,input,select,textarea{ font:inherit; color:inherit; }
   transition:all .35s var(--ease);
 }
 .rail button:hover .r-label{ opacity:1; transform:none; }
-.rail button:hover .r-dot{ background:var(--bone); width:30px; }
+.rail button:hover .r-dot{ background:var(--flame); width:30px; }
 .rail button.is-on .r-dot{ background:var(--flame); width:34px; height:2px; }
 .rail button.is-on .r-label{ opacity:1; transform:none; color:var(--flame); }
 
@@ -279,10 +279,10 @@ button,input,select,textarea{ font:inherit; color:inherit; }
   transition:color .35s var(--ease), border-color .35s var(--ease), transform .35s var(--ease), opacity .3s;
 }
 .btn-play::before{
-  content:""; position:absolute; inset:0; background:var(--bone);
+  content:""; position:absolute; inset:0; background:var(--flame);
   transform:translateY(101%); transition:transform .45s var(--ease);
 }
-.btn-play:hover:not(:disabled){ color:var(--ink); border-color:var(--bone); }
+.btn-play:hover:not(:disabled){ color:var(--on-flame); border-color:var(--flame); }
 .btn-play:hover:not(:disabled)::before{ transform:none; }
 .btn-play:active:not(:disabled){ transform:scale(.98); }
 .btn-play:disabled{ cursor:progress; color:rgba(246,228,216,.62); border-color:rgba(246,228,216,.56); }
@@ -300,7 +300,7 @@ button,input,select,textarea{ font:inherit; color:inherit; }
   border-bottom:1px solid rgba(246,228,216,.28);
   transition:all .3s var(--ease);
 }
-.btn-quiet:hover{ color:var(--bone); border-color:var(--bone); }
+.btn-quiet:hover{ color:var(--flame); border-color:var(--flame); }
 
 .btn-solid{
   appearance:none; cursor:pointer; width:100%;
@@ -506,7 +506,7 @@ button,input,select,textarea{ font:inherit; color:inherit; }
   transition:background .3s var(--ease), color .3s var(--ease);
   white-space:nowrap;
 }
-.plan-tab:hover{ color:var(--bone); }
+.plan-tab:hover{ color:var(--flame); }
 .plan-tab[aria-selected="true"]{ background:var(--flame); color:var(--on-flame); font-weight:600; }
 
 .plan-panel[hidden]{ display:none; }
